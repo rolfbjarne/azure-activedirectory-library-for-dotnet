@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|AnyCPU">
+      <Configuration>Debug</Configuration>
+      <Platform>AnyCPU</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|AnyCPU">
+      <Configuration>Release</Configuration>
+      <Platform>AnyCPU</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>e688082d-84fa-4b7c-b05b-afdb2efadb3f</ProjectGuid>
+  </PropertyGroup>
+  <PropertyGroup>
+    <NuSpecTemplate>ADAL.nuspec</NuSpecTemplate>
+    <NuProjPath>$(UserProfile)\.nuget\packages\NuProj\0.10.46-beta-gf9bec08010\tools\</NuProjPath>
+  </PropertyGroup>
+  <Import Project="$(NuProjPath)\NuProj.props" Condition="Exists('$(NuProjPath)\NuProj.props')" />
+  <PropertyGroup Label="Configuration">
+    <Id>ADAL</Id>
+    <Title>Active Directory Authentication Library</Title>
+    <Authors>Microsoft</Authors>
+    <Owners>Microsoft</Owners>
+    <Summary>This package contains the binaries of the Active Directory Authentication Library (ADAL). ADAL provides easy to use authentication functionality for your .NET based client by taking advantage of Windows Server Active Directory and Azure Active Directory.</Summary>
+    <Description>This package contains the binaries of the Active Directory Authentication Library (ADAL). ADAL provides a Portable Class Library with easy to use authentication functionality for your .NET client on various platforms including Windows desktop, Windows Store, Xamarin iOS and Xamarin Android by taking advantage of Windows Server Active Directory and Azure Active Directory.</Description>
+    <ReleaseNotes>
+    </ReleaseNotes>
+    <ProjectUrl>
+    </ProjectUrl>
+    <Copyright>Copyright © Microsoft</Copyright>
+    <Tags>Active Directory Authentication Library, ADAL, Directory, Azure AD, AAD, Identity, Authentication, .NET, Windows Store, Xamarin iOS, Android</Tags>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="project.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ADAL.nuspec" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ADAL.PCL.Desktop\ADAL.PCL.Desktop.csproj" />
+	<ProjectReference Include="..\ADAL.PCL.CoreCLR\ADAL.PCL.CoreCLR.csproj" />
+	<ProjectReference Include="..\ADAL.PCL.Android\ADAL.PCL.Android.csproj" />
+	<ProjectReference Include="..\ADAL.PCL.iOS\ADAL.PCL.iOS.csproj" />
+	<ProjectReference Include="..\ADAL.PCL.WinRT\ADAL.PCL.WinRT.csproj" />
+  </ItemGroup>
+  <Import Project="$(NuProjPath)\NuProj.targets" />
+</Project>

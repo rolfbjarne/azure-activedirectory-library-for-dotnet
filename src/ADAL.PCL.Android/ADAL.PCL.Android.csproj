@@ -74,6 +74,7 @@
     <None Include="..\..\build\35MSSharedLib1024.snk">
       <Link>35MSSharedLib1024.snk</Link>
     </None>
+    <None Include="project.json"/>
     <None Include="Resources\AboutResources.txt" />
     <AndroidResource Include="Resources\layout\WebAuthenticationBroker.axml" />
   </ItemGroup>
