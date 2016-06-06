@@ -51,3 +51,10 @@ tests/TestApp/XFormsApp/obj/
 *.suo
 src/ADAL.PCL.Android/ADAL.PCL.Android.csproj.bak
 *.suo
+bin/
+obj/
+*.nuget.props
+*.nuget.targets
+project.lock.json
+.vs/
+*.*proj.user

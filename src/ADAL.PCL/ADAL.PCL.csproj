@@ -55,6 +55,7 @@
     <None Include="..\..\build\35MSSharedLib1024.snk">
       <Link>35MSSharedLib1024.snk</Link>
     </None>
+    <None Include="project.json"/>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\ADAL.Common\CommonAssemblyInfo.cs">
