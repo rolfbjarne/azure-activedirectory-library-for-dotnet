@@ -25,37 +25,22 @@
 //
 //------------------------------------------------------------------------------
 
-using System.Reflection;
-using System.Runtime.InteropServices;
+namespace Microsoft.IdentityModel.Clients.ActiveDirectory
+{
+    class CacheQueryData
+    {
+        public string Authority { get; set; }
 
-// General Information about an assembly is controlled through the following 
-// set of attributes. Change these attribute values to modify the information
-// associated with an assembly.
-[assembly: AssemblyTitle("Test.ADAL.NET")]
-[assembly: AssemblyDescription("")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Test.ADAL.NET")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
+        public string Resource { get; set; }
 
-// Setting ComVisible to false makes the types in this assembly not visible 
-// to COM components.  If you need to access a type in this assembly from 
-// COM, set the ComVisible attribute to true on that type.
-[assembly: ComVisible(false)]
+        public string ClientId { get; set; }
 
-// The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("da901825-68ec-4aca-b10c-c1a2d234ea6c")]
+        public TokenSubjectType SubjectType { get; set; }
 
-// Version information for an assembly consists of the following four values:
-//
-//      Major Version
-//      Minor Version 
-//      Build Number
-//      Revision
-//
-// You can specify all the values or you can default the Build and Revision Numbers 
-// by using the '*' as shown below:
-// [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+        public string UniqueId { get; set; }
+
+        public string DisplayableId { get; set; }
+
+        public string AssertionHash { get; set; }
+    }
+}

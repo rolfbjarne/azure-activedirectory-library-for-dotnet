@@ -50,7 +50,7 @@ namespace TestApp.PCL
             this.ValidNonExistingRedirectUri = new Uri("urn:ietf:wg:oauth:2.0:oob");
             this.ValidLoggedInFederatedUserName = "dummy\\dummy";
             string[] segments = this.ValidLoggedInFederatedUserName.Split(new[] { '\\' });
-            this.ValidLoggedInFederatedUserId = string.Format(CultureInfo.CurrentCulture, " {0}@microsoft.com", (segments.Length == 2) ? segments[1] : segments[0]);
+            this.ValidLoggedInFederatedUserId = string.Format(CultureInfo.CurrentCulture, "{0}@microsoft.com", (segments.Length == 2) ? segments[1] : segments[0]);
 
             this.TenantName = "<REPLACE>";
             this.Authority = string.Format(CultureInfo.CurrentCulture, " https://login.windows.net/{0}", this.TenantName);
@@ -62,7 +62,7 @@ namespace TestApp.PCL
             this.ValidUserName = @"<REPLACE>";
             this.ValidDefaultRedirectUri = new Uri("https://login.live.com/");
             this.ValidExistingRedirectUri = new Uri("https://login.live.com/");
-            this.ValidRedirectUriForConfidentialClient = new Uri("https://confidential.foo-bar.com");
+            this.ValidRedirectUriForConfidentialClient = new Uri("https://confidentialclient.com");
             this.ValidPassword = "<REPLACE>";
             this.ValidResource = "https://graph.windows.net";
 

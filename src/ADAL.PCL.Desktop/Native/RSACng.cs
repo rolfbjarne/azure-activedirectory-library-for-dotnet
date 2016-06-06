@@ -76,7 +76,7 @@ namespace Microsoft.IdentityModel.Clients.ActiveDirectory.Native
     ///     </para>
     /// </summary>
     [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "RSA", Justification = "This is for consistency with the existing RSACryptoServiceProvider type")]
-    public sealed class RSACng : RSA, ICngAsymmetricAlgorithm
+    internal sealed class RSACng : RSA, ICngAsymmetricAlgorithm
     {
         private static KeySizes[] s_legalKeySizes = new KeySizes[] { new KeySizes(384, 16384, 8) };
 
@@ -336,6 +336,10 @@ namespace Microsoft.IdentityModel.Clients.ActiveDirectory.Native
             }
         }
 
+        /// <summary>
+        /// Dispose implementation
+        /// </summary>
+        /// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && m_key != null)
@@ -485,7 +489,7 @@ namespace Microsoft.IdentityModel.Clients.ActiveDirectory.Native
             if (hashAlgorithm == null)
                 throw new ArgumentNullException("hashAlgorithm");
 
-            // Keep a local copy of the key to prevent races with the key container that the key references
+            // Keep a local copy of the key to prevent multi-threading issues with the key container that the key references
             // and the key container permission we're going to demand.
             CngKey key = Key;
 
@@ -511,21 +515,40 @@ namespace Microsoft.IdentityModel.Clients.ActiveDirectory.Native
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rgb"></param>
+        /// <returns></returns>
         public override byte[] DecryptValue(byte[] rgb)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rgb"></param>
+        /// <returns></returns>
         public override byte[] EncryptValue(byte[] rgb)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="includePrivateParameters"></param>
+        /// <returns></returns>
         public override RSAParameters ExportParameters(bool includePrivateParameters)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="parameters"></param>
         public override void ImportParameters(RSAParameters parameters)
         {
             throw new NotImplementedException();

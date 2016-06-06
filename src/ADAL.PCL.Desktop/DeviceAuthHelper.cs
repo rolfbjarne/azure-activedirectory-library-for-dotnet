@@ -66,7 +66,7 @@ namespace Microsoft.IdentityModel.Clients.ActiveDirectory
                 sig = rsa.SignData(response.GetResponseToSign().ToByteArray());
             }
 
-            string signedJwt = string.Format(CultureInfo.CurrentCulture, " {0}.{1}", response.GetResponseToSign(),
+            string signedJwt = string.Format(CultureInfo.CurrentCulture, "{0}.{1}", response.GetResponseToSign(),
                 Base64UrlEncoder.Encode(sig));
             string authToken = string.Format(CultureInfo.CurrentCulture, " AuthToken=\"{0}\"", signedJwt);
             Task<string> resultTask =
@@ -104,7 +104,7 @@ namespace Microsoft.IdentityModel.Clients.ActiveDirectory
                         string distinguishedIssuerName = dNames[dNames.Length - 1];
                         for (int i = dNames.Length - 2; i >= 0; i--)
                         {
-                            distinguishedIssuerName = distinguishedIssuerName.Insert(0, dNames[i].Trim() + " + ");
+                            distinguishedIssuerName += " + " + dNames[i].Trim();
                         }
 
                         signingCert = certCollection.Find(X509FindType.FindByIssuerDistinguishedName,
@@ -205,7 +205,7 @@ namespace Microsoft.IdentityModel.Clients.ActiveDirectory
 
 
     [SecurityCritical]
-    public sealed class SafeCertContextHandle : SafeHandleZeroOrMinusOneIsInvalid
+    internal sealed class SafeCertContextHandle : SafeHandleZeroOrMinusOneIsInvalid
     {
         private SafeCertContextHandle()
             : base(true)

@@ -242,7 +242,7 @@ namespace Test.ADAL.Common
             this.ValidateAuthority = true;
             this.ValidExistingRedirectUri = new Uri("https://login.live.com/");
             this.ValidExpiresIn = 28800;
-            this.ValidNonExistingRedirectUri = new Uri("http://foo-bar.com");
+            this.ValidNonExistingRedirectUri = new Uri("http://non-existant-uri.com");
             this.ValidLoggedInFederatedUserName = "dummy\\dummy";
             string[] segments = this.ValidLoggedInFederatedUserName.Split(new[] { '\\' });
             this.ValidLoggedInFederatedUserId = string.Format(CultureInfo.CurrentCulture, " {0}@microsoft.com", (segments.Length == 2) ? segments[1] : segments[0]);
@@ -255,14 +255,14 @@ namespace Test.ADAL.Common
             this.ValidNonExistentRedirectUriClientId = this.ValidClientId;
             this.ValidClientIdWithExistingRedirectUri = this.ValidClientId;
             this.ValidConfidentialClientId = "91ce6b56-776c-4e07-83c3-ebbb11726999";
-            this.ValidConfidentialClientSecret = "3VFF+M+V/UibacSYtzpGHbHmIIKeFBkurOfl+fIqhrM=";
+            this.ValidConfidentialClientSecret = "<REPLACE>";
             this.ValidWinRTClientId = "786067bc-40cc-4171-be40-a73b2d05a461";
             this.ValidUserName = @"adaltest@aadadfs.onmicrosoft.com";
             this.ValidUserName2 = "adaltest2@aadadfs.onmicrosoft.com";
             this.ValidUserName3 = "adaltest3@aadadfs.onmicrosoft.com";
             this.ValidDefaultRedirectUri = new Uri("https://login.live.com/");
             this.ValidExistingRedirectUri = new Uri("https://login.live.com/");
-            this.ValidRedirectUriForConfidentialClient = new Uri("https://confidential.foo-bar.com");
+            this.ValidRedirectUriForConfidentialClient = new Uri("https://confidentialclient.com");
             this.ValidPassword = "<REPLACE>";
             this.ValidPassword2 = "<REPLACE>";
             this.ValidPassword3 = "<REPLACE>";
