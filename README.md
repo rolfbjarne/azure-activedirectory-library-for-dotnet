@@ -1,9 +1,9 @@
-# Active Directory Authentication Library (ADAL) for .NET, Windows Store, Windows Phone 8.1 and Windows Phone 8.1 Silverlight
+# Active Directory Authentication Library (ADAL) for .NET, Windows Store, Xamarin iOS and Xamarin Android. 
 
 Active Directory Authentication Library (ADAL) provides easy to use authentication functionality for your .NET client and Windows Store apps by taking advantage of Windows Server Active Directory and Windows Azure Active Directory.
 Here you can find the source code for the library. You can find the corresponding releases (both stable and prerelease) on the NuGet gallery at [http://www.nuget.org/packages/Microsoft.IdentityModel.Clients.ActiveDirectory/](http://www.nuget.org/packages/Microsoft.IdentityModel.Clients.ActiveDirectory/).
 
-- The latest stable release is [2.18.206251556](https://www.nuget.org/packages/Microsoft.IdentityModel.Clients.ActiveDirectory/). 
+- The latest stable release is [3.10.305110106](https://www.nuget.org/packages/Microsoft.IdentityModel.Clients.ActiveDirectory/). 
 - 
 - The next version of the library in prerelease form is also avialable on the NuGet gallery.
 - 
@@ -93,9 +93,9 @@ You can achieve the same result by adding the following lines to your applicatio
   </system.diagnostics>
 ``` 
 
-#### Windows Store and Windows Phone Applications
+#### Windows Store Applications
 
-Tracing in ADAL for Windows Store and Windows Phone is done via an instance of class `System.Diagnostics.Tracing.EventSource` with name **"Microsoft.IdentityModel.Clients.ActiveDirectory"**. You can define your own ```EventListener```, connect it to the event source and set your desired trace level. Here is an example:
+Tracing in ADAL for Windows Store is done via an instance of class `System.Diagnostics.Tracing.EventSource` with name **"Microsoft.IdentityModel.Clients.ActiveDirectory"**. You can define your own ```EventListener```, connect it to the event source and set your desired trace level. Here is an example:
 ```
 var eventListener = new SampleEventListener();
 
@@ -123,17 +123,6 @@ There is also a default event listener which writes logs to a local file named *
 AdalTrace.Level = AdalTraceLevel.Informational;
 ```
 
-#### Windows Phone Silverlight Applications
-
-Since Silverlight does not support EventSource/EventListener, we use ```LoggingChannel/LoginSession``` for logging. There is a ```LoggingChannel``` in ```AdalTrace``` which you can connect your own ```LoggingSession/FileLoggingSession``` to it and also control trace level using it. Here is an example:
-
-```
-LoggingSession loggingSession = new LoggingSession("ADAL Logging Session");
-loggingSession.AddLoggingChannel(AdalTrace.AdalLoggingChannel, LoggingLevel.Verbose);
-```
-
-and then use ```loggingSession.SaveToFileAsync(...)``` to copy the logs to a file. If you use emulator, you can then use ```ISETool.exe``` and ```tracerpt.exe``` tools to copy log file and convert it to text format.
-
 ### Network Traces
 
 You can use various tools to capture the HTTP traffic that ADAL generates.  This is most useful if you are familiar with the OAuth protocol or if you need to provide diagnostic information to Microsoft or other support channels.
@@ -155,73 +144,31 @@ All code is licensed under the Apache 2.0 license and we triage actively on GitH
 
 ## Projects in this repo
 
-### ADAL.NET
+### ADAL.PCL
 
-* This project contains the source of ADAL .NET.
+* This project contains the source of ADAL Portable Library.
 
-### ADAL.NET.WindowsForms
+### ADAL.PCL.Desktop
 
-* This project contains the source of the internal component used by ADAL .NET to drive user interaction on the Windows desktop.
+* This project contains the source of the platform specific implementation for Windows desktop.
 
-### ADAL.WinRT
+### ADAL.PCL.WinRT
 
-* This project contains the source of ADAL for Windows Store. ADAL for Windows Store is packaged as a Windows Runtime Component (.winmd).
+* This project contains the source of the platform specific implementation for Windows Store.
 
-### ADAL.WinPhone
+### ADAL.PCL.CoreCLR
 
-* This project contains the source of ADAL for Windows Phone. ADAL for Windows Phone is packaged as a Windows Runtime Component (.winmd).
+* This project contains the source of the platform specific implementation for Core CLR (still in preview).
 
-### ADAL.WinPhoneSL
+### ADAL.PCL.iOS
 
-* This project contains the source of ADAL for Windows Phone Silverlight. 
+* This project contains the source of the platform specific implementation for Xamarin iOS.
 
-### Test.ADAL.NET
+### ADAL.PCL.Android
 
-* End to end tests for ADAL .NET.
+* This project contains the source of the platform specific implementation for Xamarin Android.
 
-### Test.ADAL.NET.Friend
-
-* The friend project to access internal classes in ADAL.NET project to be used by tests.
-
-### Test.ADAL.NET.Unit
-
-* Unit tests for various components in ADAL .NET.
-
-### Test.ADAL.NET.WindowsForms
-
-* End to end tests for ADAL .NET inside a Windows Forms application. The tests in this project are identical to those in Test.ADAL.NET.
-
-### Test.ADAL.WinRT
-
-* End to end tests for ADAL for Windows Store. These tests require Test.ADAL.WinRT.Dashboard application running to be able to test interactive scenarios with UI automation.
-
-### Test.ADAL.WinRT.Dashboard
-
-* The Windows Store application used for running ADAL for Windows Store tests.
-
-### Test.ADAL.WinPhone.Dashboard
-
-* The Windows Phone application used for running ADAL for Windows Phone tests.
-
-### Test.ADAL.WinPhoneSL.Dashboard
-
-* The Windows Phone Silverlight application used for running ADAL for Windows Phone Silverlight tests.
-
-### Test.ADAL.WinRT.Unit
-
-* Unit tests for various components in ADAL for Windows Store as well as mock based tests for ADAL for Windows Store.
-
-### Test.ADAL.WinPhone.Unit
-
-* Unit tests for various components in ADAL for Windows Phone as well as mock based tests for ADAL for Windows Phone.
-
-## How to Run Tests
-
-The majority of tests in this repo are mstests which run either as unit tests (with TestCategory 'AdalDotNetUnit' or 'AdalWinRTUnit') or as end to end test running against a mock service (with TestCategory 'AdalDotNetMock' or 'AdalWinRTMock'). 
-These tests are self contained and can run either using Test Explorer in Visual Studio or command line tool mstest.exe.
-
-To run the rest of the tests, you need to create an account on Azure Active Directory (AAD) and/or setup your own ADFS server and then configure them with configurations in file STS.cs.
 
 ## License
 
-Copyright (c) Microsoft Open Technologies, Inc.  All rights reserved. Licensed under the Apache License, Version 2.0 (the "License"); 
+Copyright (c) Microsoft Corporation.  All rights reserved. Licensed under the MIT License (the "License"); 

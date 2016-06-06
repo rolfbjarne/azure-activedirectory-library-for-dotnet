@@ -1,27 +1,40 @@
 ﻿//----------------------------------------------------------------------
-// Copyright (c) Microsoft Open Technologies, Inc.
-// All Rights Reserved
-// Apache License 2.0
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// 
-// http://www.apache.org/licenses/LICENSE-2.0
-// 
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//----------------------------------------------------------------------
+// Copyright (c) Microsoft Corporation.
+// All rights reserved.
+//
+// This code is licensed under the MIT License.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files(the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and / or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions :
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+//
+//------------------------------------------------------------------------------
 
 using System;
 using System.Diagnostics;
+using System.Diagnostics.Tracing;
 using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using System.Net.Http;
 
 namespace Test.ADAL.Common
 {
@@ -34,99 +47,20 @@ namespace Test.ADAL.Common
             Guid correlationId = Guid.NewGuid();
             AuthenticationResultProxy result = null;
 
-            MemoryStream stream = new MemoryStream();
-            using (var listener = new TextWriterTraceListener(stream))
-            {
-                Trace.Listeners.Add(listener);
+            var eventListener = new SampleEventListener();
+            eventListener.EnableEvents(AdalOption.AdalEventSource, EventLevel.Verbose);
 
-                context.SetCorrelationId(correlationId);
-                result = context.AcquireToken(sts.ValidResource, sts.ValidClientId, sts.ValidDefaultRedirectUri, PromptBehaviorProxy.Auto, sts.ValidUserId);
-                VerifySuccessResult(sts, result);
-                listener.Flush();
-                string trace = Encoding.UTF8.GetString(stream.ToArray(), 0, (int)stream.Position);
-                Verify.IsTrue(trace.Contains(correlationId.ToString()));
-                Trace.Listeners.Remove(listener);
-            }
+            context.SetCorrelationId(correlationId);
+            result = await context.AcquireTokenAsync(sts.ValidResource, sts.ValidClientId, sts.ValidDefaultRedirectUri, PlatformParameters, sts.ValidUserId);
+            VerifySuccessResult(sts, result);
+            Verify.IsTrue(eventListener.TraceBuffer.Contains(correlationId.ToString()));
 
-            stream = new MemoryStream();
-            using (var listener = new TextWriterTraceListener(stream))
-            {
-                Trace.Listeners.Add(listener);
-                context.SetCorrelationId(Guid.Empty);
-                AuthenticationResultProxy result2 = await context.AcquireTokenByRefreshTokenAsync(result.RefreshToken, sts.ValidClientId);
-                Verify.IsNotNullOrEmptyString(result2.AccessToken);
-                listener.Flush();
-                string trace = Encoding.UTF8.GetString(stream.ToArray(), 0, (int)stream.Position);
-                Verify.IsFalse(trace.Contains(correlationId.ToString()));
-                Trace.Listeners.Remove(listener);
-            }
-        }
-        public static async Task AuthenticationParametersDiscoveryTestAsync(Sts sts)
-        {
-            const string RelyingPartyWithDiscoveryUrl = "http://localhost:8080";
+            eventListener.TraceBuffer = string.Empty;
 
-            using (Microsoft.Owin.Hosting.WebApp.Start<RelyingParty>(RelyingPartyWithDiscoveryUrl))
-            {
-                Log.Comment("Relying Party Started");
-
-                HttpWebResponse response = null;
-                AuthenticationParametersProxy authParams = null;
-
-                try
-                {
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(RelyingPartyWithDiscoveryUrl);
-                    request.ContentType = "application/x-www-form-urlencoded";
-                    response = (HttpWebResponse)request.GetResponse();
-                }
-                catch (WebException ex)
-                {
-                    response = (HttpWebResponse)ex.Response;
-                    if (response.StatusCode == HttpStatusCode.Unauthorized)
-                    {
-                        authParams = AuthenticationParametersProxy.CreateFromResponseAuthenticateHeader(response.Headers["WWW-authenticate"]);
-                    }
-                }
-                finally
-                {
-                    response.Close();
-                }
-
-                SetCredential(sts);
-                var context = new AuthenticationContextProxy(authParams.Authority, sts.ValidateAuthority, TokenCacheType.Null);
-                var result = context.AcquireToken(sts.ValidResource, sts.ValidClientId, sts.ValidDefaultRedirectUri, PromptBehaviorProxy.Auto, sts.ValidUserId);
-                AdalTests.VerifySuccessResult(sts, result);
-
-                // ADAL WinRT does not support AuthenticationParameters.CreateFromUnauthorizedResponse API
-                if (TestType != Common.TestType.WinRT)
-                {
-                    try
-                    {
-                        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(RelyingPartyWithDiscoveryUrl);
-                        request.ContentType = "application/x-www-form-urlencoded";
-                        response = (HttpWebResponse)request.GetResponse();
-                    }
-                    catch (WebException ex)
-                    {
-                        response = (HttpWebResponse)ex.Response;
-                        authParams = AuthenticationParametersProxy.CreateFromUnauthorizedResponse(response);
-                    }
-                    finally
-                    {
-                        response.Close();
-                    }
-
-                    context = new AuthenticationContextProxy(authParams.Authority, sts.ValidateAuthority, TokenCacheType.Null);
-                    result = context.AcquireToken(sts.ValidResource, sts.ValidClientId, sts.ValidDefaultRedirectUri, PromptBehaviorProxy.Auto, sts.ValidUserId);
-                    AdalTests.VerifySuccessResult(sts, result);
-                }
-
-                authParams = await AuthenticationParametersProxy.CreateFromResourceUrlAsync(new Uri(RelyingPartyWithDiscoveryUrl));
-                context = new AuthenticationContextProxy(authParams.Authority, sts.ValidateAuthority, TokenCacheType.Null);
-                result = context.AcquireToken(sts.ValidResource, sts.ValidClientId, sts.ValidDefaultRedirectUri, PromptBehaviorProxy.Auto, sts.ValidUserId);
-                AdalTests.VerifySuccessResult(sts, result);
-
-                Log.Comment("Relying Party Terminating...");
-            }
+            context.SetCorrelationId(Guid.Empty);
+            AuthenticationResultProxy result2 = await context.AcquireTokenSilentAsync(sts.ValidResource, sts.ValidClientId);
+            Verify.IsNotNullOrEmptyString(result2.AccessToken);
+            Verify.IsFalse(eventListener.TraceBuffer.Contains(correlationId.ToString()));
         }
 
         private static void VerifyTokenContent(AuthenticationResultProxy result)
@@ -155,6 +89,16 @@ namespace Test.ADAL.Common
             {
                 VerifyTokenContent(result);
             }
+        }
+    }
+
+    class SampleEventListener : EventListener
+    {
+        public string TraceBuffer { get; set; }
+
+        protected override void OnEventWritten(EventWrittenEventArgs eventData)
+        {
+            TraceBuffer += (eventData.Payload[0] + "\n");
         }
     }
 }

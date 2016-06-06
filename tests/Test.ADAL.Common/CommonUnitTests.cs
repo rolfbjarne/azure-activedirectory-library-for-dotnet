@@ -1,22 +1,34 @@
 ﻿//----------------------------------------------------------------------
-// Copyright (c) Microsoft Open Technologies, Inc.
-// All Rights Reserved
-// Apache License 2.0
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// 
-// http://www.apache.org/licenses/LICENSE-2.0
-// 
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//----------------------------------------------------------------------
+// Copyright (c) Microsoft Corporation.
+// All rights reserved.
+//
+// This code is licensed under the MIT License.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files(the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and / or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions :
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+//
+//------------------------------------------------------------------------------
+
+using System;
 
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Test.ADAL.Common
 {
@@ -24,45 +36,33 @@ namespace Test.ADAL.Common
     {
         public static void CreateSha256HashTest()
         {
-            string hash = PlatformSpecificHelper.CreateSha256Hash("abc");
-            string hash2 = PlatformSpecificHelper.CreateSha256Hash("abd");
-            string hash3 = PlatformSpecificHelper.CreateSha256Hash("abc");
-            Verify.AreEqual(hash, hash3);
-            Verify.AreNotEqual(hash, hash2);
-            Verify.AreEqual(hash, "ungWv48Bz+pBQUDeXa4iI7ADYaOWF3qctBD/YfIAFa0=");
+            ICryptographyHelper cryptoHelper = new CryptographyHelper();
+            string hash = cryptoHelper.CreateSha256Hash("abc");
+            string hash2 = cryptoHelper.CreateSha256Hash("abd");
+            string hash3 = cryptoHelper.CreateSha256Hash("abc");
+            Assert.AreEqual(hash, hash3);
+            Assert.AreNotEqual(hash, hash2);
+            Assert.AreEqual(hash, "ungWv48Bz+pBQUDeXa4iI7ADYaOWF3qctBD/YfIAFa0=");
         }
 
         public static void AdalIdTest()
         {
-            IHttpWebRequest request = NetworkPlugin.HttpWebRequestFactory.Create("https://test");
-            AdalIdHelper.AddAsHeaders(request);
+            var adalParameters = AdalIdHelper.GetAdalIdParameters();
 
-            Verify.AreEqual(4, request.Headers.Count);
-            Verify.IsNotNull(request.Headers[AdalIdParameter.Product]);
-            Verify.IsNotNull(request.Headers[AdalIdParameter.Version]);
-            Verify.IsNotNull(request.Headers[AdalIdParameter.CpuPlatform]);
-#if TEST_ADAL_WINRT_UNIT
-            Verify.IsNull(request.Headers[AdalIdParameter.OS]);
-            Verify.IsNotNull(request.Headers[AdalIdParameter.DeviceModel]);
-#else
-            Verify.IsNotNull(request.Headers[AdalIdParameter.OS]);
-            Verify.IsNull(request.Headers[AdalIdParameter.DeviceModel]);
-#endif
+            Assert.AreEqual(4, adalParameters.Count);
+            Assert.IsNotNull(adalParameters[AdalIdParameter.Product]);
+            Assert.IsNotNull(adalParameters[AdalIdParameter.Version]);
+            Assert.IsNotNull(adalParameters[AdalIdParameter.CpuPlatform]);
+            Assert.IsNotNull(adalParameters[AdalIdParameter.OS]);
+            Assert.IsFalse(adalParameters.ContainsKey(AdalIdParameter.DeviceModel));
+            adalParameters = AdalIdHelper.GetAdalIdParameters();
 
-            RequestParameters parameters = new RequestParameters(null, new ClientKey("client_id"));
-            AdalIdHelper.AddAsQueryParameters(parameters);
-
-            Verify.AreEqual(5, parameters.Count);
-            Verify.IsNotNull(parameters[AdalIdParameter.Product]);
-            Verify.IsNotNull(parameters[AdalIdParameter.Version]);
-            Verify.IsNotNull(parameters[AdalIdParameter.CpuPlatform]);
-#if TEST_ADAL_WINRT_UNIT
-            Verify.IsFalse(parameters.ContainsKey(AdalIdParameter.OS));
-            Verify.IsNotNull(parameters[AdalIdParameter.DeviceModel]);
-#else
-            Verify.IsNotNull(parameters[AdalIdParameter.OS]);
-            Verify.IsFalse(parameters.ContainsKey(AdalIdParameter.DeviceModel));
-#endif
+            Assert.AreEqual(4, adalParameters.Count);
+            Assert.IsNotNull(adalParameters[AdalIdParameter.Product]);
+            Assert.IsNotNull(adalParameters[AdalIdParameter.Version]);
+            Assert.IsNotNull(adalParameters[AdalIdParameter.CpuPlatform]);
+            Assert.IsNotNull(adalParameters[AdalIdParameter.OS]);
+            Assert.IsFalse(adalParameters.ContainsKey(AdalIdParameter.DeviceModel));
         }
     }
 }

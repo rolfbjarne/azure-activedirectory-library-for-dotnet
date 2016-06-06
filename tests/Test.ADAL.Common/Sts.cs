@@ -1,22 +1,32 @@
 ﻿//----------------------------------------------------------------------
-// Copyright (c) Microsoft Open Technologies, Inc.
-// All Rights Reserved
-// Apache License 2.0
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// 
-// http://www.apache.org/licenses/LICENSE-2.0
-// 
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//----------------------------------------------------------------------
+// Copyright (c) Microsoft Corporation.
+// All rights reserved.
+//
+// This code is licensed under the MIT License.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files(the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and / or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions :
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+//
+//------------------------------------------------------------------------------
 
 using System;
+using System.Globalization;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 
 namespace Test.ADAL.Common
@@ -26,7 +36,9 @@ namespace Test.ADAL.Common
         Unknown,
         ADFS,
         AAD,
-        AADFederatedWithADFS3
+        AADFederatedWithADFS3,
+        AdfsPasswordGrant,
+        AadPasswordGrant
     }
 
     public static class StsFactory
@@ -45,8 +57,14 @@ namespace Test.ADAL.Common
                 case StsType.AAD:
                     sts = new AadSts();
                     break;
+                case StsType.AdfsPasswordGrant:
+                    sts = new AdfsPasswordGrantSts();
+                    break;
+                case StsType.AadPasswordGrant:
+                    sts = new AadPasswordGrantSts();
+                    break;
                 default:
-                    throw new ArgumentException(string.Format("Unsupported STS type '{0}'", stsType));
+                    throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, " Unsupported STS type '{0}'", stsType));
             }
 
             return sts;
@@ -83,11 +101,11 @@ namespace Test.ADAL.Common
 
         public bool ValidateAuthority { get; protected set; }
 
-        public string Authority { get; protected set; }
+        public string Authority { get; set; }
 
         public string TenantlessAuthority { get; protected set; }
 
-        public string ValidResource { get; protected set; }
+        public string ValidResource { get; set; }
 
         public string ValidResource2 { get; protected set; }
 
@@ -117,7 +135,7 @@ namespace Test.ADAL.Common
 
         public Uri ValidRedirectUriForConfidentialClient { get; set; }
 
-        public string ValidUserName { get; protected set; }
+        public string ValidUserName { get; set; }
 
         public UserIdentifier ValidUserId
         {
@@ -181,6 +199,38 @@ namespace Test.ADAL.Common
         public string MsaUserName { get; protected set; }
         public string MsaPassword { get; protected set; }
     }
+    
+    class AadPasswordGrantSts : Sts
+    {
+        public AadPasswordGrantSts()
+        {
+            this.ValidateAuthority = true;
+            
+            this.TenantlessAuthority = "https://login.windows.net/common";
+            this.Authority = this.TenantlessAuthority;
+            this.Type = StsType.AAD;
+            
+            this.ValidClientId = "1950a258-227b-4e31-a9cf-717495945fc2";
+            this.ValidUserName = "<REPLACE>";
+            this.ValidPassword = "<REPLACE>";
+            this.ValidResource = "https://graph.windows.net";
+        }
+    }
+    
+    class AdfsPasswordGrantSts : Sts
+    {
+        public AdfsPasswordGrantSts()
+        {
+            this.Authority = "https://identity.contoso.com/adfs/ls";
+            this.Type = StsType.ADFS;
+            this.ValidateAuthority = false;
+            this.ValidClientId = "oic.resource.owner.flow";
+            this.ValidDefaultRedirectUri = new Uri("oic://resource-owner/flow");
+            this.ValidUserName = @"somedomain\username";
+            this.ValidPassword = "Password123";
+            this.ValidResource = "https://management.core.contoso.com/";
+        }
+    }
 
     class AadSts : Sts
     {
@@ -192,27 +242,27 @@ namespace Test.ADAL.Common
             this.ValidateAuthority = true;
             this.ValidExistingRedirectUri = new Uri("https://login.live.com/");
             this.ValidExpiresIn = 28800;
-            this.ValidNonExistingRedirectUri = new Uri("http://foobar.com");
+            this.ValidNonExistingRedirectUri = new Uri("http://non-existant-uri.com");
             this.ValidLoggedInFederatedUserName = "dummy\\dummy";
             string[] segments = this.ValidLoggedInFederatedUserName.Split(new[] { '\\' });
-            this.ValidLoggedInFederatedUserId = string.Format("{0}@microsoft.com", (segments.Length == 2) ? segments[1] : segments[0]);
+            this.ValidLoggedInFederatedUserId = string.Format(CultureInfo.CurrentCulture, " {0}@microsoft.com", (segments.Length == 2) ? segments[1] : segments[0]);
 
             this.TenantName = "aadadfs.onmicrosoft.com";
-            this.Authority = string.Format("https://login.windows.net/{0}/", this.TenantName);
+            this.Authority = string.Format(CultureInfo.CurrentCulture, "https://login.windows.net/{0}/", this.TenantName);
             this.TenantlessAuthority = "https://login.windows.net/Common";
             this.Type = StsType.AAD;
             this.ValidClientId = "4b8d1b32-ee16-4b30-9b5d-e374c43deb31";
             this.ValidNonExistentRedirectUriClientId = this.ValidClientId;
             this.ValidClientIdWithExistingRedirectUri = this.ValidClientId;
             this.ValidConfidentialClientId = "91ce6b56-776c-4e07-83c3-ebbb11726999";
-            this.ValidConfidentialClientSecret = "3VFF+M+V/UibacSYtzpGHbHmIIKeFBkurOfl+fIqhrM=";
+            this.ValidConfidentialClientSecret = "<REPLACE>";
             this.ValidWinRTClientId = "786067bc-40cc-4171-be40-a73b2d05a461";
             this.ValidUserName = @"adaltest@aadadfs.onmicrosoft.com";
             this.ValidUserName2 = "adaltest2@aadadfs.onmicrosoft.com";
             this.ValidUserName3 = "adaltest3@aadadfs.onmicrosoft.com";
             this.ValidDefaultRedirectUri = new Uri("https://login.live.com/");
             this.ValidExistingRedirectUri = new Uri("https://login.live.com/");
-            this.ValidRedirectUriForConfidentialClient = new Uri("https://confidential.foobar.com");
+            this.ValidRedirectUriForConfidentialClient = new Uri("https://confidentialclient.com");
             this.ValidPassword = "<REPLACE>";
             this.ValidPassword2 = "<REPLACE>";
             this.ValidPassword3 = "<REPLACE>";
@@ -273,5 +323,4 @@ namespace Test.ADAL.Common
             this.ValidResource2 = "urn:msft:ad:test:oauth:test2";
         }
     }
-
 }
