@@ -30,7 +30,7 @@ using Microsoft.IdentityModel.Clients.ActiveDirectory.Internal;
 
 namespace Microsoft.IdentityModel.Clients.ActiveDirectory
 {
-    internal class WebUIFactory : IWebUIFactory
+    public class WebUIFactory : IWebUIFactory
     {
         private PlatformParameters parameters;
 
