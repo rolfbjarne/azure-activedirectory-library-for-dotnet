@@ -43,6 +43,9 @@ namespace Microsoft.IdentityModel.Clients.ActiveDirectory
     [DataContract]
     public class AuthorizationResult
     {
+        // The parameterless default constructor is used by JSON deserializer
+        public AuthorizationResult() { }
+
         internal AuthorizationResult(AuthorizationStatus status)
         {
             this.Status = status;
