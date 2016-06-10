@@ -40,10 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ADAL.PCL.Desktop\ADAL.PCL.Desktop.csproj" />
-	<ProjectReference Include="..\ADAL.PCL.CoreCLR\ADAL.PCL.CoreCLR.csproj" />
-	<ProjectReference Include="..\ADAL.PCL.Android\ADAL.PCL.Android.csproj" />
-	<ProjectReference Include="..\ADAL.PCL.iOS\ADAL.PCL.iOS.csproj" />
-	<ProjectReference Include="..\ADAL.PCL.WinRT\ADAL.PCL.WinRT.csproj" />
+    <ProjectReference Include="..\ADAL.PCL.CoreCLR\ADAL.PCL.CoreCLR.csproj" />
   </ItemGroup>
   <Import Project="$(NuProjPath)\NuProj.targets" />
 </Project>
