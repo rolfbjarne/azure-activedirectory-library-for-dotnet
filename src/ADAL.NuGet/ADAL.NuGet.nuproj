@@ -29,7 +29,6 @@
     <Description>Active Directory Authentication Library</Description>
     <Copyright>(C) Microsoft Corporation. All rights reserved.</Copyright>
     <Tags>Active Directory Authentication Library, ADAL, Directory, Azure AD, AAD, Identity, Authentication, .NET</Tags>
-    <language>en-US</language>
   </PropertyGroup>
   <ItemGroup>
     <None Include="project.json" />
