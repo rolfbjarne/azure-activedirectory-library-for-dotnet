@@ -12,11 +12,7 @@
       "version": "1.4.19",
       "suppressParent": "none"
     },
-    "NuProj": "0.10.46-beta-gf9bec08010",
-    "ReadOnlySourceTree": {
-      "version": "0.1.36-beta",
-      "suppressParent": "none"
-    }
+    "NuProj": "0.10.46-beta-gf9bec08010"
   },
   "frameworks": {
     "net451": { }
