@@ -19,18 +19,17 @@
   </PropertyGroup>
   <Import Project="$(NuProjPath)\NuProj.props" Condition="Exists('$(NuProjPath)\NuProj.props')" />
   <PropertyGroup Label="Configuration">
-    <Id>ADAL</Id>
+    <Id>ADAL.NET</Id>
+    <Version>3.10.0.0</Version>
     <Title>Active Directory Authentication Library</Title>
     <Authors>Microsoft</Authors>
     <Owners>Microsoft</Owners>
-    <Summary>This package contains the binaries of the Active Directory Authentication Library (ADAL). ADAL provides easy to use authentication functionality for your .NET based client by taking advantage of Windows Server Active Directory and Azure Active Directory.</Summary>
-    <Description>This package contains the binaries of the Active Directory Authentication Library (ADAL). ADAL provides a Portable Class Library with easy to use authentication functionality for your .NET client on various platforms including Windows desktop, Windows Store, Xamarin iOS and Xamarin Android by taking advantage of Windows Server Active Directory and Azure Active Directory.</Description>
     <ReleaseNotes>
     </ReleaseNotes>
-    <ProjectUrl>
-    </ProjectUrl>
-    <Copyright>Copyright © Microsoft</Copyright>
-    <Tags>Active Directory Authentication Library, ADAL, Directory, Azure AD, AAD, Identity, Authentication, .NET, Windows Store, Xamarin iOS, Android</Tags>
+    <Description>Active Directory Authentication Library</Description>
+    <Copyright>(C) Microsoft Corporation. All rights reserved.</Copyright>
+    <Tags>Active Directory Authentication Library, ADAL, Directory, Azure AD, AAD, Identity, Authentication, .NET</Tags>
+    <language>en-US</language>
   </PropertyGroup>
   <ItemGroup>
     <None Include="project.json" />

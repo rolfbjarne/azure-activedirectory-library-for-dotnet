@@ -2,13 +2,9 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/01/nuspec.xsd">
   <metadata>
     <id>placeholder</id>
-    <version>$version$</version>
-    <authors>Microsoft</authors>
-    <owners></owners>
-    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <version>to be overwritten by project file</version>
     <description>to be overwritten by project file</description>
-    <releaseNotes></releaseNotes>
-    <copyright></copyright>
-    <tags></tags>
+    <authors>to be overwritten by project file</authors>
+    <language>en-US</language>
   </metadata>
 </package>
