@@ -19,3 +19,4 @@ project.lock.json
 *.userprefs
 AppPackages
 Microsoft.IdentityModel.Clients.ActiveDirectory.XML
+.vs/

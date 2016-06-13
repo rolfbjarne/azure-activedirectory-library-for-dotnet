@@ -12,7 +12,7 @@
     <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
     <SignAssembly>true</SignAssembly>
     <DelaySign>true</DelaySign>
-    <AssemblyOriginatorKeyFile>..\..\build\35MSSharedLib1024.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\..\build\VSPublicKey.snk</AssemblyOriginatorKeyFile>
     <TargetFrameworkIdentifier>Xamarin.Mac</TargetFrameworkIdentifier>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -111,8 +111,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\build\35MSSharedLib1024.snk">
-      <Link>35MSSharedLib1024.snk</Link>
+    <None Include="..\..\build\VSPublicKey.snk">
+      <Link>VSPublicKey.snk</Link>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />

@@ -48,15 +48,15 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>..\..\build\35MSSharedLib1024.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\..\build\VSPublicKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <DelaySign>true</DelaySign>
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
-    <None Include="..\..\build\35MSSharedLib1024.snk">
-      <Link>35MSSharedLib1024.snk</Link>
+    <None Include="..\..\build\VSPublicKey.snk">
+      <Link>VSPublicKey.snk</Link>
     </None>
     <None Include="project.json" />
   </ItemGroup>
