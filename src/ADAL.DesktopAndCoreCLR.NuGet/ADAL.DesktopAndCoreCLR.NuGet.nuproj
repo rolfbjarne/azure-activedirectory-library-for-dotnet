@@ -19,7 +19,7 @@
   </PropertyGroup>
   <Import Project="$(NuProjPath)\NuProj.props" Condition="Exists('$(NuProjPath)\NuProj.props')" />
   <PropertyGroup Label="Configuration">
-    <Id>ADAL.NET</Id>
+    <Id>ADAL.NET.DesktopAndCoreCLR</Id>
     <Version>3.10.0.0</Version>
     <Title>Active Directory Authentication Library</Title>
     <Authors>Microsoft</Authors>
