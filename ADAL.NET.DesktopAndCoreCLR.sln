@@ -31,7 +31,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdalDesktopTestApp", "tests
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApp.PCL", "tests\TestApp\TestApp.PCL\TestApp.PCL.csproj", "{C09EE601-3F07-4E8B-B12F-473B2BFBEF95}"
 EndProject
-Project("{FF286327-C783-4F7A-AB73-9BCBAD0D4460}") = "ADAL.DesktopAndCoreCLR.NuGet", "src\ADAL.NuGet\ADAL.DesktopAndCoreCLR.NuGet.nuproj", "{E688082D-84FA-4B7C-B05B-AFDB2EFADB3F}"
+Project("{FF286327-C783-4F7A-AB73-9BCBAD0D4460}") = "ADAL.DesktopAndCoreCLR.NuGet", "src\ADAL.DesktopAndCoreCLR.NuGet\ADAL.DesktopAndCoreCLR.NuGet.nuproj", "{E688082D-84FA-4B7C-B05B-AFDB2EFADB3F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
