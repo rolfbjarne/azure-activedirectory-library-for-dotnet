@@ -94,7 +94,7 @@ namespace Microsoft.IdentityModel.Clients.ActiveDirectory
         private static Assembly LoadPlatformSpecificAssembly()
         {
             // For security reasons, it is important to have PublicKeyToken mentioned referencing the assembly.
-            const string PlatformSpecificAssemblyNameTemplate = "Microsoft.IdentityModel.Clients.ActiveDirectory.Platform, Version={0}, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a";
+            const string PlatformSpecificAssemblyNameTemplate = "Microsoft.IdentityService.Clients.ActiveDirectory.Platform, Version={0}, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a";
 
             string platformSpecificAssemblyName = string.Format(CultureInfo.CurrentCulture, PlatformSpecificAssemblyNameTemplate, AdalIdHelper.GetAdalVersion());
 
