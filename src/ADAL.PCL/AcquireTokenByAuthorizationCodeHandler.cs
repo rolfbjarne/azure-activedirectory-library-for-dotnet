@@ -27,7 +27,7 @@
 
 using System;
 
-namespace Microsoft.IdentityModel.Clients.ActiveDirectory
+namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
     class AcquireTokenByAuthorizationCodeHandler : AcquireTokenHandlerBase
     {

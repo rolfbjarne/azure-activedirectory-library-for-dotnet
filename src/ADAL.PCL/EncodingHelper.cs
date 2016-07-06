@@ -30,7 +30,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 
-namespace Microsoft.IdentityModel.Clients.ActiveDirectory
+namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
     /// <summary>
     /// The encoding helper.

@@ -28,7 +28,7 @@
 using System;
 using System.Xml.Linq;
 
-namespace Microsoft.IdentityModel.Clients.ActiveDirectory
+namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
     internal static class AdalErrorEx
     {

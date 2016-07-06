@@ -30,7 +30,7 @@ using System.Globalization;
 using System.IO;
 using System.Reflection;
 
-namespace Microsoft.IdentityModel.Clients.ActiveDirectory
+namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
     internal static class PlatformPluginSwitch
     {
@@ -66,7 +66,7 @@ namespace Microsoft.IdentityModel.Clients.ActiveDirectory
         public static void InitializeByAssemblyDynamicLinking()
         {
             Assembly assembly = LoadPlatformSpecificAssembly();
-            const string Namespace = "Microsoft.IdentityModel.Clients.ActiveDirectory.";
+            const string Namespace = "Microsoft.IdentityService.Clients.ActiveDirectory.";
             InjectDependecies(
                 (IWebUIFactory)Activator.CreateInstance(assembly.GetType(Namespace + "WebUIFactory")),
                 (ITokenCachePlugin)Activator.CreateInstance(assembly.GetType(Namespace + "TokenCachePlugin")),

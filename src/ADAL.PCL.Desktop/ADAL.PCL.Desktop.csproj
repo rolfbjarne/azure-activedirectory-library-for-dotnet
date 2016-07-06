@@ -7,7 +7,7 @@
     <ProjectGuid>{FA2C7F08-3CCB-47C2-B359-627CC96C04A3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Microsoft.IdentityModel.Clients.ActiveDirectory</RootNamespace>
+    <RootNamespace>Microsoft.IdentityService.Clients.ActiveDirectory</RootNamespace>
     <AssemblyName>Microsoft.IdentityService.Clients.ActiveDirectory.Platform</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

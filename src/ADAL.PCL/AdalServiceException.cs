@@ -27,7 +27,7 @@
 
 using System.Globalization;
 
-namespace Microsoft.IdentityModel.Clients.ActiveDirectory
+namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
     using System;
     using System.Net;
