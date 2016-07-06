@@ -57,7 +57,7 @@
     <None Include="..\..\build\VSPublicKey.snk">
       <Link>VSPublicKey.snk</Link>
     </None>
-    <None Include="project.json"/>
+    <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\ADAL.Common\CommonAssemblyInfo.cs">
@@ -111,6 +111,7 @@
     <Compile Include="IHttpClientFactory.cs" />
     <Compile Include="IHttpWebResponse.cs" />
     <Compile Include="ITokenCachePlugin.cs" />
+    <Compile Include="IWebUIFactory2.cs" />
     <Compile Include="JsonHelper.cs" />
     <Compile Include="JsonWebToken.cs" />
     <Compile Include="LoggerBase.cs" />
