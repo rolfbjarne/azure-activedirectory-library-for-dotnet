@@ -30,7 +30,7 @@ using System.Net.NetworkInformation;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.IdentityModel.Clients.ActiveDirectory.Internal
+namespace Microsoft.IdentityService.Clients.ActiveDirectory.Internal
 {
     internal abstract class WebUI : IWebUI
     {

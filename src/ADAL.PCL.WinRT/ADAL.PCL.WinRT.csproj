@@ -9,7 +9,7 @@
     <ProjectGuid>{826D90F4-CA79-4788-918C-B66AA5CC6DF0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Microsoft.IdentityModel.Clients.ActiveDirectory</RootNamespace>
+    <RootNamespace>Microsoft.IdentityService.Clients.ActiveDirectory</RootNamespace>
     <AssemblyName>Microsoft.IdentityService.Clients.ActiveDirectory.Platform</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformVersion>8.1</TargetPlatformVersion>

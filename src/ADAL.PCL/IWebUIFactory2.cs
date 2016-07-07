@@ -25,18 +25,10 @@
 //
 //------------------------------------------------------------------------------
 
-using System;
-
-namespace Microsoft.IdentityService.Clients.ActiveDirectory
+namespace Microsoft.IdentityModel.Clients.ActiveDirectory
 {
-    internal class HttpRequestWrapperException : Exception
+    public interface IWebUIFactory2 : IWebUIFactory
     {
-        public HttpRequestWrapperException(IHttpWebResponse webResponse, Exception innerException) 
-            : base(string.Empty, innerException)
-        {
-            this.WebResponse = webResponse;
-        }
-
-        public IHttpWebResponse WebResponse { get; private set; }
+        IWebUI CreateAuthenticationDialog2(IPlatformParameters parameters, object additionalContext);
     }
 }

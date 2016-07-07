@@ -6,7 +6,7 @@
     <ProjectGuid>{43DD159E-8C0C-4BEE-BA97-C92340600900}</ProjectGuid>
     <ProjectTypeGuids>{A3F8F2AB-B479-4A4A-A458-A89E7DC349F1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
-    <RootNamespace>Microsoft.IdentityModel.Clients.ActiveDirectory</RootNamespace>
+    <RootNamespace>Microsoft.IdentityService.Clients.ActiveDirectory</RootNamespace>
     <AssemblyName>Microsoft.IdentityService.Clients.ActiveDirectory.Platform</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>

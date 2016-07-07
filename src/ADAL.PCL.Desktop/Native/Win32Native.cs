@@ -34,7 +34,7 @@ using System.Runtime.InteropServices;
 using System.Security;
 using Microsoft.Win32.SafeHandles;
 
-namespace Microsoft.IdentityModel.Clients.ActiveDirectory.Native
+namespace Microsoft.IdentityService.Clients.ActiveDirectory.Native
 {
     /// <summary>
     ///     Native interop layer for Win32 APIs

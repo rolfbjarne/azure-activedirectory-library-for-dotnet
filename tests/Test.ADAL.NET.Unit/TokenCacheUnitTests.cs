@@ -27,7 +27,7 @@
 
 using System.IO;
 using System.Threading.Tasks;
-using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using Microsoft.IdentityService.Clients.ActiveDirectory;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Test.ADAL.Common.Unit;
 
@@ -51,6 +51,14 @@ namespace Test.ADAL.NET.Unit
         public async Task TokenCacheKeyTestAsync()
         {
             await TokenCacheTests.TokenCacheKeyTestAsync(new PlatformParameters(PromptBehavior.Auto, null));
+        }
+
+        [TestMethod]
+        [Description("Test for TokenCache")]
+        [TestCategory("AdalDotNetUnit")]
+        public async Task TokenCacheTestUniqueIdDisplayableId()
+        {
+            await TokenCacheTests.TestUniqueIdDisplayableIdLookup(new PlatformParameters(PromptBehavior.Auto, null));
         }
 
         [TestMethod]

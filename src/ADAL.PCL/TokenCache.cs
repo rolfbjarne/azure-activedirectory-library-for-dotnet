@@ -33,7 +33,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Microsoft.IdentityModel.Clients.ActiveDirectory
+namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
     /// <summary>
     /// Token cache class used by <see cref="AuthenticationContext"/> to store access and refresh tokens.

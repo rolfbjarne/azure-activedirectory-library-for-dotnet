@@ -30,7 +30,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
-using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using Microsoft.IdentityService.Clients.ActiveDirectory;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Test.ADAL.Common;
