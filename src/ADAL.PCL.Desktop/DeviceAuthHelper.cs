@@ -39,10 +39,10 @@ using System.Security.Cryptography.X509Certificates;
 using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.IdentityModel.Clients.ActiveDirectory.Native;
+using Microsoft.IdentityService.Clients.ActiveDirectory.Native;
 using Microsoft.Win32.SafeHandles;
 
-namespace Microsoft.IdentityModel.Clients.ActiveDirectory
+namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
     internal class DeviceAuthHelper : IDeviceAuthHelper
     {

@@ -34,7 +34,7 @@ using System.Security;
 using System.Security.Cryptography;
 using Microsoft.Win32.SafeHandles;
 
-namespace Microsoft.IdentityModel.Clients.ActiveDirectory
+namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
     internal static class X509Native
     {

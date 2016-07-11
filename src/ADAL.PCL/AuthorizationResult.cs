@@ -29,9 +29,9 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace Microsoft.IdentityModel.Clients.ActiveDirectory
+namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
-    internal enum AuthorizationStatus
+    public enum AuthorizationStatus
     {
         Success,
         ErrorHttp,
@@ -41,8 +41,11 @@ namespace Microsoft.IdentityModel.Clients.ActiveDirectory
     }
 
     [DataContract]
-    internal class AuthorizationResult
+    public class AuthorizationResult
     {
+        // The parameterless default constructor is used by JSON deserializer
+        public AuthorizationResult() { }
+
         internal AuthorizationResult(AuthorizationStatus status)
         {
             this.Status = status;
@@ -66,6 +69,7 @@ namespace Microsoft.IdentityModel.Clients.ActiveDirectory
             }
         }
 
+        [DataMember]
         public AuthorizationStatus Status { get; private set; }
 
         [DataMember]

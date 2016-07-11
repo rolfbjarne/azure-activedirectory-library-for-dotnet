@@ -30,7 +30,7 @@ using System.Globalization;
 using System.IO;
 using System.Reflection;
 
-namespace Microsoft.IdentityModel.Clients.ActiveDirectory
+namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
     internal static class PlatformPluginSwitch
     {
@@ -42,7 +42,7 @@ namespace Microsoft.IdentityModel.Clients.ActiveDirectory
         }
     }
 
-    internal static class PlatformPlugin
+    public static class PlatformPlugin
     {
         static PlatformPlugin()
         {
@@ -55,18 +55,18 @@ namespace Microsoft.IdentityModel.Clients.ActiveDirectory
         }
 
         public static IWebUIFactory WebUIFactory { get; set; }
-        public static IHttpClientFactory HttpClientFactory { get; set; }
-        public static ITokenCachePlugin TokenCachePlugin { get; set; }
-        public static LoggerBase Logger { get; set; }
-        public static PlatformInformationBase PlatformInformation { get; set; }
-        public static ICryptographyHelper CryptographyHelper { get; set; }
-        public static IDeviceAuthHelper DeviceAuthHelper { get; set; }
-        public static IBrokerHelper BrokerHelper { get; set; }
+        internal static IHttpClientFactory HttpClientFactory { get; set; }
+        internal static ITokenCachePlugin TokenCachePlugin { get; set; }
+        internal static LoggerBase Logger { get; set; }
+        internal static PlatformInformationBase PlatformInformation { get; set; }
+        internal static ICryptographyHelper CryptographyHelper { get; set; }
+        internal static IDeviceAuthHelper DeviceAuthHelper { get; set; }
+        internal static IBrokerHelper BrokerHelper { get; set; }
 
         public static void InitializeByAssemblyDynamicLinking()
         {
             Assembly assembly = LoadPlatformSpecificAssembly();
-            const string Namespace = "Microsoft.IdentityModel.Clients.ActiveDirectory.";
+            const string Namespace = "Microsoft.IdentityService.Clients.ActiveDirectory.";
             InjectDependecies(
                 (IWebUIFactory)Activator.CreateInstance(assembly.GetType(Namespace + "WebUIFactory")),
                 (ITokenCachePlugin)Activator.CreateInstance(assembly.GetType(Namespace + "TokenCachePlugin")),
@@ -78,7 +78,7 @@ namespace Microsoft.IdentityModel.Clients.ActiveDirectory
             );
         }
 
-        public static void InjectDependecies(IWebUIFactory webUIFactory, ITokenCachePlugin tokenCachePlugin, LoggerBase logger, 
+        internal static void InjectDependecies(IWebUIFactory webUIFactory, ITokenCachePlugin tokenCachePlugin, LoggerBase logger, 
             PlatformInformationBase platformInformation, ICryptographyHelper cryptographyHelper,
             IDeviceAuthHelper deviceAuthHelper, IBrokerHelper brokerHelper)
         {
@@ -94,7 +94,7 @@ namespace Microsoft.IdentityModel.Clients.ActiveDirectory
         private static Assembly LoadPlatformSpecificAssembly()
         {
             // For security reasons, it is important to have PublicKeyToken mentioned referencing the assembly.
-            const string PlatformSpecificAssemblyNameTemplate = "Microsoft.IdentityModel.Clients.ActiveDirectory.Platform, Version={0}, Culture=neutral, PublicKeyToken=31bf3856ad364e35";
+            const string PlatformSpecificAssemblyNameTemplate = "Microsoft.IdentityService.Clients.ActiveDirectory.Platform, Version={0}, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a";
 
             string platformSpecificAssemblyName = string.Format(CultureInfo.CurrentCulture, PlatformSpecificAssemblyNameTemplate, AdalIdHelper.GetAdalVersion());
 

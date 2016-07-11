@@ -28,7 +28,7 @@
 using System;
 using Windows.Storage;
 
-namespace Microsoft.IdentityModel.Clients.ActiveDirectory
+namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
     public sealed partial class TokenCache
     {

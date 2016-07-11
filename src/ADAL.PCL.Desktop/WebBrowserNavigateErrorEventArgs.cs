@@ -27,7 +27,7 @@
 
 using System.ComponentModel;
 
-namespace Microsoft.IdentityModel.Clients.ActiveDirectory.Internal
+namespace Microsoft.IdentityService.Clients.ActiveDirectory.Internal
 {
     /// <summary>
     /// 

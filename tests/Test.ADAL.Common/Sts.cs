@@ -27,7 +27,7 @@
 
 using System;
 using System.Globalization;
-using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using Microsoft.IdentityService.Clients.ActiveDirectory;
 
 namespace Test.ADAL.Common
 {

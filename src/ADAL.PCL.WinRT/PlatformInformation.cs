@@ -35,7 +35,7 @@ using Windows.Security.Authentication.Web;
 using Windows.Storage;
 using Windows.System.UserProfile;
 
-namespace Microsoft.IdentityModel.Clients.ActiveDirectory
+namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
     internal class PlatformInformation : PlatformInformationBase
     {
@@ -102,7 +102,7 @@ namespace Microsoft.IdentityModel.Clients.ActiveDirectory
             }
             catch (UnauthorizedAccessException)
             {
-                PlatformPlugin.Logger.Information(callState, "Cannot try Windows Integrated Auth due to lack of Enterprise capability.");
+                PlatformPlugin.Logger.Information(callState, "Cannot try Windows Integrated Authentication due to lack of Enterprise capability.");
                 // This mostly means Enterprise capability is missing, so WIA cannot be used and
                 // we return true to add form auth parameter in the caller.
                 return true;

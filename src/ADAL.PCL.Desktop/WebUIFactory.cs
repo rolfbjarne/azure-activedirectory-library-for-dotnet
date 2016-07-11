@@ -26,11 +26,11 @@
 //------------------------------------------------------------------------------
 
 using System;
-using Microsoft.IdentityModel.Clients.ActiveDirectory.Internal;
+using Microsoft.IdentityService.Clients.ActiveDirectory.Internal;
 
-namespace Microsoft.IdentityModel.Clients.ActiveDirectory
+namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
-    internal class WebUIFactory : IWebUIFactory
+    public class WebUIFactory : IWebUIFactory
     {
         private PlatformParameters parameters;
 

@@ -31,7 +31,7 @@ using System.Security.Cryptography;
 using Foundation;
 using Security;
 
-namespace Microsoft.IdentityModel.Clients.ActiveDirectory
+namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
     static class BrokerKeyHelper
     {
@@ -73,7 +73,12 @@ namespace Microsoft.IdentityModel.Clients.ActiveDirectory
                     ValueData = byteData
                 };
 
-                SecStatusCode code = SecKeyChain.Add(record);
+                var result = SecKeyChain.Add(record);
+                if (result != SecStatusCode.Success)
+                {
+                    PlatformPlugin.Logger.Warning(null, "Failed to save broker key: " + result);
+                }
+
                 brokerKey = byteData.ToArray();
             }
             else

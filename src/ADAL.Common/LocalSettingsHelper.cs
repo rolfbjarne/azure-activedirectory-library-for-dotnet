@@ -31,7 +31,7 @@ using System.Text;
 using Windows.Foundation.Collections;
 using Windows.Storage;
 
-namespace Microsoft.IdentityModel.Clients.ActiveDirectory
+namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
     internal static class LocalSettingsHelper
     {

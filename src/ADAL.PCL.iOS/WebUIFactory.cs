@@ -30,9 +30,9 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.IdentityModel.Clients.ActiveDirectory
+namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
-    internal class WebUIFactory : IWebUIFactory
+    public class WebUIFactory : IWebUIFactory
     {
         public IWebUI CreateAuthenticationDialog(IPlatformParameters parameters)
         {

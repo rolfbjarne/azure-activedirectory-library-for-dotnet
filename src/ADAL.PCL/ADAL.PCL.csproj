@@ -8,13 +8,15 @@
     <ProjectGuid>{94569420-69B5-4031-A975-F5791E3F2F17}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Microsoft.IdentityModel.Clients.ActiveDirectory</RootNamespace>
-    <AssemblyName>Microsoft.IdentityModel.Clients.ActiveDirectory</AssemblyName>
+    <RootNamespace>Microsoft.IdentityService.Clients.ActiveDirectory</RootNamespace>
+    <AssemblyName>Microsoft.IdentityService.Clients.ActiveDirectory</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkProfile>Profile7</TargetFrameworkProfile>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <!-- temporarily suppress warnings regarding undocumented public API even in the product. -->
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -36,7 +38,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\Microsoft.IdentityModel.Clients.ActiveDirectory.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\Microsoft.IdentityService.Clients.ActiveDirectory.XML</DocumentationFile>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <CodeAnalysisRuleSet>Sdl7.0.ruleset</CodeAnalysisRuleSet>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -45,16 +47,17 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>..\..\build\35MSSharedLib1024.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\..\build\VSPublicKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <DelaySign>true</DelaySign>
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
-    <None Include="..\..\build\35MSSharedLib1024.snk">
-      <Link>35MSSharedLib1024.snk</Link>
+    <None Include="..\..\build\VSPublicKey.snk">
+      <Link>VSPublicKey.snk</Link>
     </None>
+    <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\ADAL.Common\CommonAssemblyInfo.cs">
@@ -108,6 +111,7 @@
     <Compile Include="IHttpClientFactory.cs" />
     <Compile Include="IHttpWebResponse.cs" />
     <Compile Include="ITokenCachePlugin.cs" />
+    <Compile Include="IWebUIFactory2.cs" />
     <Compile Include="JsonHelper.cs" />
     <Compile Include="JsonWebToken.cs" />
     <Compile Include="LoggerBase.cs" />

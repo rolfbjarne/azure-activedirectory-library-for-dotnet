@@ -29,7 +29,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Microsoft.IdentityModel.Clients.ActiveDirectory.Platform")]
+[assembly: AssemblyTitle("Microsoft.IdentityService.Clients.ActiveDirectory.Platform")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
@@ -40,6 +40,3 @@ using System.Runtime.InteropServices;
 [assembly: Guid("ff47962a-d498-4c63-b7e9-4db3653ad7e0")]
 
 // Assembly version information is in file ADAL.Common\CommonAssemblyInfo.cs
-
-[assembly: AssemblyDelaySign(true)]
-[assembly: AssemblyKeyFile(@"..\..\build\35MSSharedLib1024.snk")]

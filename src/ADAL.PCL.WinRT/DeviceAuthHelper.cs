@@ -38,7 +38,7 @@ using Windows.Security.Cryptography.Certificates;
 using Windows.Security.Cryptography.Core;
 using Windows.Storage.Streams;
 
-namespace Microsoft.IdentityModel.Clients.ActiveDirectory
+namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
     internal class DeviceAuthHelper : IDeviceAuthHelper
     {

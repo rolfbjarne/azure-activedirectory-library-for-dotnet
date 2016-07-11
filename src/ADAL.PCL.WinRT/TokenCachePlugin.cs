@@ -33,7 +33,7 @@ using System.Threading.Tasks;
 using Windows.Foundation.Collections;
 using Windows.Storage;
 
-namespace Microsoft.IdentityModel.Clients.ActiveDirectory
+namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
     internal class TokenCachePlugin : ITokenCachePlugin
     {

@@ -25,9 +25,9 @@
 //
 //------------------------------------------------------------------------------
 
-namespace Microsoft.IdentityModel.Clients.ActiveDirectory
+namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
-    interface IWebUIFactory
+    public interface IWebUIFactory
     {
         IWebUI CreateAuthenticationDialog(IPlatformParameters parameters);
     }

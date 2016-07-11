@@ -29,7 +29,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.IdentityModel.Clients.ActiveDirectory
+namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
     internal class WebUI : IWebUI
     {
@@ -64,7 +64,12 @@ namespace Microsoft.IdentityModel.Clients.ActiveDirectory
         {
             try
             {
+#if MAC
+                var windowController = new AuthenticationAgentNSWindowController(authorizationUri.AbsoluteUri, redirectUri.OriginalString, CallbackMethod);
+                windowController.Run (parameters.CallerWindow);
+#else
                 this.parameters.CallerViewController.PresentViewController(new AuthenticationAgentUINavigationController(authorizationUri.AbsoluteUri, redirectUri.OriginalString, CallbackMethod), false, null);
+#endif
             }
             catch (Exception ex)
             {

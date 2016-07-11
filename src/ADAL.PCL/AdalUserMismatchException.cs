@@ -27,7 +27,7 @@
 
 using System.Globalization;
 
-namespace Microsoft.IdentityModel.Clients.ActiveDirectory
+namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
     /// <summary>
     /// The exception type thrown when user returned by service does not match user in the request.

@@ -30,7 +30,7 @@ using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.IdentityModel.Clients.ActiveDirectory
+namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
     internal class AcquireTokenOnBehalfHandler : AcquireTokenHandlerBase
     {
