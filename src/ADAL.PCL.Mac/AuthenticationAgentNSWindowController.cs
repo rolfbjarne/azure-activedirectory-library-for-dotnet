@@ -34,7 +34,7 @@ using Foundation;
 using AppKit;
 using WebKit;
 
-namespace Microsoft.IdentityModel.Clients.ActiveDirectory
+namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
     [Register("AuthenticationAgentNSWindowController")]
     class AuthenticationAgentNSWindowController

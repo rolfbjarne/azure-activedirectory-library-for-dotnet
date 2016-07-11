@@ -30,7 +30,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Foundation;
 
-namespace Microsoft.IdentityModel.Clients.ActiveDirectory
+namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
     internal class PlatformInformation : PlatformInformationBase
     {

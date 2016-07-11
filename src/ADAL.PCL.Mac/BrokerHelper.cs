@@ -30,7 +30,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Foundation;
 
-namespace Microsoft.IdentityModel.Clients.ActiveDirectory
+namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
     class BrokerHelper : IBrokerHelper
     {
