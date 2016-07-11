@@ -33,7 +33,7 @@ using CoreGraphics;
 using Foundation;
 using UIKit;
 
-namespace Microsoft.IdentityModel.Clients.ActiveDirectory
+namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
     [Foundation.Register("AuthenticationAgentUIViewController")]
     internal class AuthenticationAgentUIViewController : UIViewController

@@ -32,7 +32,7 @@ using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.DataProtection;
 using Windows.Storage.Streams;
 
-namespace Microsoft.IdentityModel.Clients.ActiveDirectory
+namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
     internal static class CryptographyHelper
     {

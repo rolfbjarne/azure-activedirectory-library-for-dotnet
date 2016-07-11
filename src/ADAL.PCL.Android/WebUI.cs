@@ -39,7 +39,7 @@ using Java.Security;
 using Java.IO;
 using Android.Util;
 
-namespace Microsoft.IdentityModel.Clients.ActiveDirectory
+namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
     internal class WebUI : IWebUI
     {

@@ -29,7 +29,7 @@ using System;
 
 using AppKit;
 using Foundation;
-using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using Microsoft.IdentityService.Clients.ActiveDirectory;
 using TestApp.PCL;
 
 namespace AdalMacTestApp
