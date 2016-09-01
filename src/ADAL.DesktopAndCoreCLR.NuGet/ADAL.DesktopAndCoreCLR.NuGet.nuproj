@@ -15,12 +15,12 @@
   </PropertyGroup>
   <PropertyGroup>
     <NuSpecTemplate>ADAL.nuspec</NuSpecTemplate>
-    <NuProjPath>$(UserProfile)\.nuget\packages\NuProj\0.10.46-beta-gf9bec08010\tools\</NuProjPath>
+    <NuProjPath>$(UserProfile)\.nuget\packages\NuProj\0.10.48-beta-gea4a31bbc5\tools\</NuProjPath>
   </PropertyGroup>
   <Import Project="$(NuProjPath)\NuProj.props" Condition="Exists('$(NuProjPath)\NuProj.props')" />
   <PropertyGroup Label="Configuration">
     <Id>ADAL.NET.DesktopAndCoreCLR</Id>
-    <Version>3.10.0.0</Version>
+    <Version>3.13.0.0</Version>
     <Title>Active Directory Authentication Library</Title>
     <Authors>Microsoft</Authors>
     <Owners>Microsoft</Owners>

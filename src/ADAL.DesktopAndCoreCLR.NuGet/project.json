@@ -12,7 +12,7 @@
       "version": "1.4.19",
       "suppressParent": "none"
     },
-    "NuProj": "0.10.46-beta-gf9bec08010"
+    "NuProj": "0.10.48-beta-gea4a31bbc5"
   },
   "frameworks": {
     "net451": { }
