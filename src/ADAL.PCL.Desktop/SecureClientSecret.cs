@@ -30,7 +30,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Security;
 
-namespace Microsoft.IdentityModel.Clients.ActiveDirectory
+namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
     /// <summary>
     /// This class allows to pass client secret as a SecureString to the API.
