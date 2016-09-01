@@ -44,11 +44,14 @@ namespace Microsoft.IdentityService.Clients.ActiveDirectory
         
         public IPlatformParameters PlatformParameters { get; set; }
 
-        public bool CanInvokeBroker { get
+        public bool CanInvokeBroker
         {
-            PlatformParameters pp = PlatformParameters as PlatformParameters;
-            return pp.UseBroker && UIApplication.SharedApplication.CanOpenUrl(new NSUrl("msauth://"));
-        } }
+            get
+            {
+                PlatformParameters pp = PlatformParameters as PlatformParameters;
+                return pp.UseBroker && UIApplication.SharedApplication.CanOpenUrl(new NSUrl("msauth://"));
+            }
+        }
 
         public async Task<AuthenticationResultEx> AcquireTokenUsingBroker(IDictionary<string, string> brokerPayload)
         {
@@ -142,7 +145,7 @@ namespace Microsoft.IdentityService.Clients.ActiveDirectory
 
             var dateTimeOffset = new DateTimeOffset(new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc));
             dateTimeOffset = dateTimeOffset.AddSeconds(response.ExpiresOn);
-            return response.GetResult(dateTimeOffset);
+            return response.GetResult(dateTimeOffset, dateTimeOffset);
         }
         
         public static void SetBrokerResponse(NSUrl brokerResponse)

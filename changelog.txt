@@ -1,3 +1,42 @@
+Version 3.13.4
+==============
+This release includes
+- Fix to force iOS UIViewController to run on UI thread.
+- Fix regresssion where content was passed as a file path for UserCredential flows.
+- Fix an issue where internal exception was being thrown back to the developer.
+
+Version 3.13.3
+==============
+This release includes
+- Fix for null pointer exception when hash was computed on a null string.
+- Add support to return complete http response body as an inner exception.
+
+Version 3.13.2
+==============
+This release includes
+- Adding default constructor to UserInfo class to circumvent CoreCLR deserialization issue.
+
+Version 3.13.1
+==============
+This release contains
+- Fix to add ConfigureAwait(false) to all await calls to avoid deadlocks.
+- Fix bug where null reference was thrown in Android when onResult was called for an activity.
+- ext_expires_in claim was not being read from server response.
+- Disable Cross-Tenant refresh token redemption for client credentials flow.
+- Fix the bug where access token in authentication result could be null in multi-threaded scenarios.
+- Fix a bug where UserAssertion was not assumed to be JWT by default.
+- Add support for SecureString client secret.
+- Fix bug where null reference exception was thrown for AcquireTokenUsingDeviceCode.
+
+Version 3.12.0
+==============
+This release contains
+- Support for extended lifetime tokens.
+- Fix to allow hardware based keys to perform authentication.
+- Validate signing certificate chain in Android.
+- Update NetStandard GA packages.
+- Fix bug in cache lookup where developer provided parameters were ignored.
+
 Version 3.10.305231913
 ======================
 This release contains

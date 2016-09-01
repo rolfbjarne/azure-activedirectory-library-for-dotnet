@@ -36,19 +36,28 @@ namespace Microsoft.IdentityService.Clients.ActiveDirectory
     [DataContract]
     public sealed class UserInfo
     {
-        internal UserInfo()
+        /// <summary>
+        /// Create user information for token cache lookup
+        /// </summary>
+        public UserInfo()
         {            
         }
 
-        internal UserInfo(UserInfo other)
+        /// <summary>
+        /// Create user information copied from another UserInfo object
+        /// </summary>
+        public UserInfo(UserInfo other)
         {
-            this.UniqueId = other.UniqueId;
-            this.DisplayableId = other.DisplayableId;
-            this.GivenName = other.GivenName;
-            this.FamilyName = other.FamilyName;
-            this.IdentityProvider = other.IdentityProvider;
-            this.PasswordChangeUrl = other.PasswordChangeUrl;
-            this.PasswordExpiresOn = other.PasswordExpiresOn;
+            if (other != null)
+            {
+                this.UniqueId = other.UniqueId;
+                this.DisplayableId = other.DisplayableId;
+                this.GivenName = other.GivenName;
+                this.FamilyName = other.FamilyName;
+                this.IdentityProvider = other.IdentityProvider;
+                this.PasswordChangeUrl = other.PasswordChangeUrl;
+                this.PasswordExpiresOn = other.PasswordExpiresOn;
+            }
         }
 
         /// <summary>

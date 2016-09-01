@@ -1,4 +1,4 @@
-﻿//------------------------------------------------------------------------------
+﻿//----------------------------------------------------------------------
 //
 // Copyright (c) Microsoft Corporation.
 // All rights reserved.
@@ -25,16 +25,27 @@
 //
 //------------------------------------------------------------------------------
 
-using AppKit;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace AdalMacTestApp
+namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
-    static class MainClass
+    class RequestData
     {
-        static void Main(string[] args)
-        {
-            NSApplication.Init();
-            NSApplication.Main(args);
-        }
+        public Authenticator Authenticator { get; set; }
+
+        public TokenCache TokenCache { get; set; }
+
+        public string Resource { get; set; }
+
+        public ClientKey ClientKey { get; set; }
+
+        public TokenSubjectType SubjectType { get; set; }
+
+        public bool ExtendedLifeTimeEnabled { get; set; }
+
     }
 }

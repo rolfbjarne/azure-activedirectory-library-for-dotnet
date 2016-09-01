@@ -38,6 +38,11 @@ namespace Microsoft.IdentityService.Clients.ActiveDirectory
     {
         public string CreateSha256Hash(string input)
         {
+            if (string.IsNullOrEmpty(input))
+            {
+                return null;
+            }
+
             using (SHA256Cng sha = new SHA256Cng())
             {
                 UTF8Encoding encoding = new UTF8Encoding();
@@ -79,29 +84,33 @@ namespace Microsoft.IdentityService.Clients.ActiveDirectory
         private static RSACryptoServiceProvider GetCryptoProviderForSha256(RSACryptoServiceProvider rsaProvider)
         {
             const int PROV_RSA_AES = 24;    // CryptoApi provider type for an RSA provider supporting sha-256 digital signatures
-            if (rsaProvider.CspKeyContainerInfo.ProviderType == PROV_RSA_AES)
+
+            // ProviderType == 1(PROV_RSA_FULL) and providerType == 12(PROV_RSA_SCHANNEL) are provider types that only support SHA1. Change them to PROV_RSA_AES=24 that supports SHA2 also.
+            // Only levels up if the associated key is not a hardware key.
+            // Another provider type related to rsa, PROV_RSA_SIG == 2 that only supports Sha1 is no longer supported
+            if ((rsaProvider.CspKeyContainerInfo.ProviderType == 1 || rsaProvider.CspKeyContainerInfo.ProviderType == 12) && !rsaProvider.CspKeyContainerInfo.HardwareDevice)
             {
-                return rsaProvider;
+                CspParameters csp = new CspParameters
+                {
+                    ProviderType = PROV_RSA_AES,
+                    KeyContainerName = rsaProvider.CspKeyContainerInfo.KeyContainerName,
+                    KeyNumber = (int)rsaProvider.CspKeyContainerInfo.KeyNumber
+                };
+
+                if (rsaProvider.CspKeyContainerInfo.MachineKeyStore)
+                {
+                    csp.Flags = CspProviderFlags.UseMachineKeyStore;
+                }
+
+                //
+                // If UseExistingKey is not specified, the CLR will generate a key for a non-existent group.
+                // With this flag, a CryptographicException is thrown instead.
+                //
+                csp.Flags |= CspProviderFlags.UseExistingKey;
+                return new RSACryptoServiceProvider(csp);
             }
 
-            CspParameters csp = new CspParameters
-            {
-                ProviderType = PROV_RSA_AES,
-                KeyContainerName = rsaProvider.CspKeyContainerInfo.KeyContainerName,
-                KeyNumber = (int)rsaProvider.CspKeyContainerInfo.KeyNumber
-            };
-
-            if (rsaProvider.CspKeyContainerInfo.MachineKeyStore)
-            {
-                csp.Flags = CspProviderFlags.UseMachineKeyStore;
-            }
-
-            //
-            // If UseExistingKey is not specified, the CLR will generate a key for a non-existent group.
-            // With this flag, a CryptographicException is thrown instead.
-            //
-            csp.Flags |= CspProviderFlags.UseExistingKey;
-            return new RSACryptoServiceProvider(csp);
+            return rsaProvider;
         }
     }
 }

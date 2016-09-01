@@ -1,4 +1,4 @@
-//------------------------------------------------------------------------------
+﻿//----------------------------------------------------------------------
 //
 // Copyright (c) Microsoft Corporation.
 // All rights reserved.
@@ -27,50 +27,54 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using UIKit;
+using System.Runtime.InteropServices;
+using System.Security;
 
 namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
     /// <summary>
-    /// Additional parameters used in acquiring user's authorization
+    /// This class allows to pass client secret as a SecureString to the API.
     /// </summary>
-    public class PlatformParameters : IPlatformParameters
+    public class SecureClientSecret : ISecureClientSecret
     {
-        private PlatformParameters()
+        private SecureString secureString;
+
+        /// <summary>
+        /// Required Constructor
+        /// </summary>
+        /// <param name="secret">SecureString secret. Required and cannot be null.</param>
+        public SecureClientSecret(SecureString secret)
         {
-            UseBroker = false;
-        }
+            if (secret == null)
+            {
+                throw new ArgumentNullException(nameof(secret));
+            }
 
+            this.secureString = secret;
+        }
+        
         /// <summary>
-        /// Additional parameters used in acquiring user's authorization
+        /// Applies the secret to the dictionary.
         /// </summary>
-        /// <param name="callerViewController">UIViewController instance</param>
-        public PlatformParameters(UIViewController callerViewController):this()
+        /// <param name="parameters">Dictionary to which the securestring is applied to be sent to server</param>
+        public void ApplyTo(IDictionary<string, string> parameters)
         {
-            this.CallerViewController = callerViewController;
+            var output = new char[secureString.Length];
+            IntPtr secureStringPtr = Marshal.SecureStringToCoTaskMemUnicode(secureString);
+            for (int i = 0; i < secureString.Length; i++)
+            {
+                output[i] = (char) Marshal.ReadInt16(secureStringPtr, i*2);
+            }
+
+            Marshal.ZeroFreeCoTaskMemUnicode(secureStringPtr);
+            parameters[OAuthParameter.ClientSecret] = new string(output);
+
+            if (secureString != null && !secureString.IsReadOnly())
+            {
+                secureString.Clear();
+            }
+
+            secureString = null;
         }
-
-        /// <summary>
-        /// Additional parameters used in acquiring user's authorization
-        /// </summary>
-        /// <param name="callerViewController">UIViewController instance</param>
-        /// <param name="useBroker">skips calling to broker if broker is present. false, by default</param>
-        public PlatformParameters(UIViewController callerViewController, bool useBroker):this(callerViewController)
-        {
-            UseBroker = useBroker;
-        }
-
-        /// <summary>
-        /// Caller UIViewController
-        /// </summary>
-        public UIViewController CallerViewController { get; private set; }
-
-        /// <summary>
-        /// Skips calling to broker if broker is present. false, by default
-        /// </summary>
-        public bool UseBroker { get; set; }
     }
 }

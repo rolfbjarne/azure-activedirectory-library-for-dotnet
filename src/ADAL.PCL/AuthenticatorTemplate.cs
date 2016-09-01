@@ -89,7 +89,7 @@ namespace Microsoft.IdentityService.Clients.ActiveDirectory
             try
             {
                 var client = new AdalHttpClient(instanceDiscoveryEndpoint, callState);
-                InstanceDiscoveryResponse discoveryResponse = await client.GetResponseAsync<InstanceDiscoveryResponse>(ClientMetricsEndpointType.InstanceDiscovery).ConfigureAwait(false);
+                InstanceDiscoveryResponse discoveryResponse = await client.GetResponseAsync<InstanceDiscoveryResponse>().ConfigureAwait(false);
 
                 if (discoveryResponse.TenantDiscoveryEndpoint == null)
                 {
