@@ -90,7 +90,7 @@ namespace Microsoft.IdentityService.Clients.ActiveDirectory
             await this.authenticator.UpdateFromTemplateAsync(this.callState).ConfigureAwait(false);
             this.ValidateAuthorityType();
             AdalHttpClient client = new AdalHttpClient(CreateDeviceCodeRequestUriString(), this.callState);
-            DeviceCodeResponse response = await client.GetResponseAsync<DeviceCodeResponse>(ClientMetricsEndpointType.DeviceCode).ConfigureAwait(false);
+            DeviceCodeResponse response = await client.GetResponseAsync<DeviceCodeResponse>().ConfigureAwait(false);
 
             if (!string.IsNullOrEmpty(response.Error))
             {

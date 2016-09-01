@@ -1,4 +1,4 @@
-﻿//------------------------------------------------------------------------------
+﻿//----------------------------------------------------------------------
 //
 // Copyright (c) Microsoft Corporation.
 // All rights reserved.
@@ -25,27 +25,19 @@
 //
 //------------------------------------------------------------------------------
 
-using AppKit;
-using Foundation;
+using System.Collections.Generic;
 
-namespace AdalMacTestApp
+namespace Microsoft.IdentityModel.Clients.ActiveDirectory
 {
-    [Register("AppDelegate")]
-    public class AppDelegate : NSApplicationDelegate
+    /// <summary>
+    /// Interface to allow for client secret to be passed in as a SecureString
+    /// </summary>
+    public interface ISecureClientSecret
     {
-        public AppDelegate()
-        {
-        }
-
-        public override void DidFinishLaunching(NSNotification notification)
-        {
-            // Insert code here to initialize your application
-        }
-
-        public override void WillTerminate(NSNotification notification)
-        {
-            // Insert code here to tear down your application
-        }
+        /// <summary>
+        /// Writes SecureString to the dictionary.
+        /// </summary>
+        /// <param name="parameters"></param>
+        void ApplyTo(IDictionary<string, string> parameters);
     }
 }
-
