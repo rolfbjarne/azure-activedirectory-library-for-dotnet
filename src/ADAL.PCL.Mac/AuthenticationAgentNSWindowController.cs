@@ -33,12 +33,14 @@ using CoreGraphics;
 using Foundation;
 using AppKit;
 using WebKit;
+using System.Linq;
+using Microsoft.IdentityService.Clients.ActiveDirectory;
 
-namespace Microsoft.IdentityService.Clients.ActiveDirectory
+namespace Microsoft.IdentityModel.Clients.ActiveDirectory
 {
     [Register("AuthenticationAgentNSWindowController")]
     class AuthenticationAgentNSWindowController
-        : NSWindowController, IWebPolicyDelegate, IWebFrameLoadDelegate, INSWindowDelegate
+        : NSWindowController, IWebPolicyDelegate, IWebFrameLoadDelegate, INSWindowDelegate, IWebResourceLoadDelegate
     {
         const int DEFAULT_WINDOW_WIDTH = 420;
         const int DEFAULT_WINDOW_HEIGHT = 650;
@@ -50,13 +52,17 @@ namespace Microsoft.IdentityService.Clients.ActiveDirectory
 
         readonly string url;
         readonly string callback;
+        Exception exceptionToThrow;
 
         readonly ReturnCodeCallback callbackMethod;
+
+        //use a temporary cookie store that only lasts long enough for the sign-in
+        EphemeralCookieStore cookieStore = new EphemeralCookieStore();
 
         public delegate void ReturnCodeCallback(AuthorizationResult result);
 
         public AuthenticationAgentNSWindowController(string url, string callback, ReturnCodeCallback callbackMethod)
-            : base ("PlaceholderNibNameToForceWindowLoad")
+            : base("PlaceholderNibNameToForceWindowLoad")
         {
             this.url = url;
             this.callback = callback;
@@ -67,7 +73,7 @@ namespace Microsoft.IdentityService.Clients.ActiveDirectory
         [Export("windowWillClose:")]
         public void WillClose(NSNotification notification)
         {
-            NSApplication.SharedApplication.StopModal ();
+            NSApplication.SharedApplication.StopModal();
 
             NSUrlProtocol.UnregisterClass(new ObjCRuntime.Class(typeof(AdalCustomUrlProtocol)));
         }
@@ -77,6 +83,11 @@ namespace Microsoft.IdentityService.Clients.ActiveDirectory
             this.callerWindow = callerWindow;
 
             RunModal();
+
+            if (exceptionToThrow != null)
+            {
+                throw new AdalException(AdalError.AuthenticationUiFailed, exceptionToThrow);
+            }
         }
 
         //webview only works on main runloop, not nested, so set up manual modal runloop
@@ -92,8 +103,9 @@ namespace Microsoft.IdentityService.Clients.ActiveDirectory
                 {
                     var nextEvent = NSApplication.SharedApplication.NextEvent(NSEventMask.AnyEvent, NSDate.DistantFuture, NSRunLoop.NSDefaultRunLoopMode, true);
 
+                    //allow only events for this window and for the app
                     //discard events that are for other windows, else they remain somewhat interactive
-                    if (nextEvent.Window != null && nextEvent.Window != window)
+                    if (nextEvent.Window != null && nextEvent.Window != window && nextEvent.Type != NSEventType.AppKitDefined)
                     {
                         continue;
                     }
@@ -145,6 +157,7 @@ namespace Microsoft.IdentityService.Clients.ActiveDirectory
             {
                 FrameLoadDelegate = this,
                 PolicyDelegate = this,
+                ResourceLoadDelegate = this,
                 AutoresizingMask = NSViewResizingMask.HeightSizable | NSViewResizingMask.WidthSizable,
                 AccessibilityIdentifier = "ADAL_SIGN_IN_WEBVIEW"
             };
@@ -187,6 +200,22 @@ namespace Microsoft.IdentityService.Clients.ActiveDirectory
         [Export("webView:decidePolicyForNavigationAction:request:frame:decisionListener:")]
         void DecidePolicyForNavigation(WebView webView, NSDictionary actionInformation, NSUrlRequest request, WebFrame frame, NSObject decisionToken)
         {
+            try
+            {
+                DecidePolicyForNavigationInternal(webView, actionInformation, request, frame, decisionToken);
+            }
+            catch (Exception ex)
+            {
+                exceptionToThrow = ex;
+                WebView.DecideIgnore(decisionToken);
+                Close();
+            }
+        }
+
+        void DecidePolicyForNavigationInternal(WebView webView, NSDictionary actionInformation, NSUrlRequest request, WebFrame frame, NSObject decisionToken)
+        {
+            cookieStore.TakeCookies(webView);
+
             if (request == null)
             {
                 WebView.DecideUse(decisionToken);
@@ -269,6 +298,22 @@ namespace Microsoft.IdentityService.Clients.ActiveDirectory
         {
             CancelAuthentication();
             return true;
+        }
+
+        [Export("webView:resource:didReceiveResponse:fromDataSource:")]
+        public void OnReceivedResponse(WebView sender, NSObject identifier, NSUrlResponse responseReceived, WebDataSource dataSource)
+        {
+            cookieStore.TakeCookies(responseReceived);
+        }
+
+        [Export("webView:resource:willSendRequest:redirectResponse:fromDataSource:")]
+        public NSUrlRequest OnSendRequest(WebView sender, NSObject identifier, NSUrlRequest request, NSUrlResponse redirectResponse, WebDataSource dataSource)
+        {
+            cookieStore.TakeCookies(redirectResponse);
+
+            var mutableRequest = (NSMutableUrlRequest)request.MutableCopy();
+            cookieStore.GiveCookies(mutableRequest);
+            return mutableRequest;
         }
     }
 }
