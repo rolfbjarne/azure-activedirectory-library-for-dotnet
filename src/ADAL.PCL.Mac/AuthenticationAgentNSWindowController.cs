@@ -36,7 +36,7 @@ using WebKit;
 using System.Linq;
 using Microsoft.IdentityService.Clients.ActiveDirectory;
 
-namespace Microsoft.IdentityModel.Clients.ActiveDirectory
+namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
     [Register("AuthenticationAgentNSWindowController")]
     class AuthenticationAgentNSWindowController
