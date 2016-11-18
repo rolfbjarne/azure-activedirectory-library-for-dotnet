@@ -56,6 +56,11 @@ namespace Microsoft.IdentityService.Clients.ActiveDirectory
         /// token contains updated claims. If user logon cookies are available, the user will not be asked for 
         /// credentials again and the logon dialog will dismiss automatically.
         /// </summary>
-        RefreshSession
+        RefreshSession,
+
+        /// <summary>
+        /// The user will be prompted to select an account or sign in a a new account.
+        /// </summary>
+        SelectAccount
     }
 }

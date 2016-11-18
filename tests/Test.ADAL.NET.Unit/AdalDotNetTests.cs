@@ -918,6 +918,18 @@ namespace Test.ADAL.NET.Unit
         [Description("Test for Force Prompt")]
         public async Task ForcePromptTestAsync()
         {
+            await VerifyForcePrompt(PromptBehavior.Always);
+        }
+
+        [TestMethod]
+        [Description("Test for Force Prompt")]
+        public async Task ForcePromptSelectAccountTestAsync()
+        {
+            await VerifyForcePrompt(PromptBehavior.SelectAccount);
+        }
+
+        private static async Task VerifyForcePrompt(PromptBehavior promptBehavior)
+        {
             MockHelpers.ConfigureMockWebUI(new AuthorizationResult(AuthorizationStatus.Success,
                 TestConstants.DefaultRedirectUri + "?code=some-code"));
             HttpMessageHandlerFactory.AddMockHandler(new MockHttpMessageHandler()
@@ -944,7 +956,7 @@ namespace Test.ADAL.NET.Unit
             AuthenticationResult result =
                 await
                     context.AcquireTokenAsync(TestConstants.DefaultResource, TestConstants.DefaultClientId,
-                        TestConstants.DefaultRedirectUri, new PlatformParameters(PromptBehavior.Always));
+                        TestConstants.DefaultRedirectUri, new PlatformParameters(promptBehavior));
             Assert.IsNotNull(result);
             Assert.AreEqual(TestConstants.DefaultAuthorityHomeTenant, context.Authenticator.Authority);
             Assert.AreEqual(result.AccessToken, "some-access-token");
