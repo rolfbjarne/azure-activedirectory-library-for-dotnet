@@ -24,17 +24,31 @@
 // THE SOFTWARE.
 //
 //------------------------------------------------------------------------------
+using Xwt;
 
-using AppKit;
-
-namespace AdalMacTestApp
+namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
-    static class MainClass
+    /// <summary>
+    /// Additional parameters used in acquiring user's authorization
+    /// </summary>
+    public class PlatformParameters : IPlatformParameters
     {
-        static void Main(string[] args)
+        private PlatformParameters()
         {
-            NSApplication.Init();
-            NSApplication.Main(args);
         }
+
+        /// <summary>
+        /// Additional parameters used in acquiring user's authorization
+        /// </summary>
+        /// <param name="callerWindow">NSWindow instance</param>
+        public PlatformParameters(Window callerWindow) : this()
+        {
+            this.CallerWindow = callerWindow;
+        }
+
+        /// <summary>
+        /// Caller NSWindow
+        /// </summary>
+        public Window CallerWindow { get; private set; }
     }
 }

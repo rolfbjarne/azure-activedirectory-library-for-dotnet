@@ -48,6 +48,7 @@ namespace Microsoft.IdentityService.Clients.ActiveDirectory
                     return new InteractiveWebUI { OwnerWindow = this.parameters.OwnerWindow };
                 case PromptBehavior.Always:
                 case PromptBehavior.RefreshSession:
+                case PromptBehavior.SelectAccount:
                     return new InteractiveWebUI { OwnerWindow = this.parameters.OwnerWindow };
                 case PromptBehavior.Never:
                     return new SilentWebUI { OwnerWindow = this.parameters.OwnerWindow };

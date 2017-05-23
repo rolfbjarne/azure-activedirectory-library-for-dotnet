@@ -53,3 +53,4 @@ namespace Microsoft.IdentityService.Clients.ActiveDirectory
         public NSWindow CallerWindow { get; private set; }
     }
 }
+

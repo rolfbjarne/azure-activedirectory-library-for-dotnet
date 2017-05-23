@@ -25,37 +25,18 @@
 //
 //------------------------------------------------------------------------------
 
-namespace Microsoft.IdentityService.Clients.ActiveDirectory
-{
-    /// <summary>
-    /// Indicates whether AcquireToken should automatically prompt only if necessary or whether
-    /// it should prompt regardless of whether there is a cached token.
-    /// </summary>
-    public enum PromptBehavior
-    {
-        /// <summary>
-        /// Acquire token will prompt the user for credentials only when necessary.  If a token
-        /// that meets the requirements is already cached then the user will not be prompted.
-        /// </summary>
-        Auto,
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
-        /// <summary>
-        /// The user will be prompted for credentials even if there is a token that meets the requirements
-        /// already in the cache.
-        /// </summary>
-        Always,
+[assembly: AssemblyTitle("Microsoft.IdentityService.Clients.ActiveDirectory.Platform")]
 
-        /// <summary>
-        /// The user will not be prompted for credentials.  If prompting is necessary then the AcquireToken request
-        /// will fail.
-        /// </summary>
-        Never,
+// Setting ComVisible to false makes the types in this assembly not visible 
+// to COM components.  If you need to access a type in this assembly from 
+// COM, set the ComVisible attribute to true on that type.
+[assembly: ComVisible(false)]
 
-        /// <summary>
-        /// Re-authorizes (through displaying webview) the resource usage, making sure that the resulting access
-        /// token contains updated claims. If user logon cookies are available, the user will not be asked for 
-        /// credentials again and the logon dialog will dismiss automatically.
-        /// </summary>
-        RefreshSession
-    }
-}
+// The following GUID is for the ID of the typelib if this project is exposed to COM
+[assembly: Guid("ff47962a-d498-4c63-b7e9-4db3653ad7e0")]
+
+// Assembly version information is in file ADAL.Common\CommonAssemblyInfo.cs

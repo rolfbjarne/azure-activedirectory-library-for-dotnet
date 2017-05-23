@@ -25,27 +25,33 @@
 //
 //------------------------------------------------------------------------------
 
-using AppKit;
-using Foundation;
+using System;
 
-namespace AdalMacTestApp
+namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
-    [Register("AppDelegate")]
-    public class AppDelegate : NSApplicationDelegate
+    /// <summary>
+    /// Static class that consumes the response from the Authentication flow and continues token acquisition. This class should be called in ApplicationDelegate whenever app loads/reloads.
+    /// </summary>
+    public static class AuthenticationContinuationHelper
     {
-        public AppDelegate()
+        /// <summary>
+        /// Returns if the response is from the broker app
+        /// </summary>
+        /// <param name="sourceApplication">application bundle id</param>
+        /// <returns></returns>
+        public static bool IsBrokerResponse(string sourceApplication)
         {
+            return sourceApplication != null && sourceApplication.Equals("com.microsoft.azureauthenticator", StringComparison.OrdinalIgnoreCase);
         }
 
-        public override void DidFinishLaunching(NSNotification notification)
+        /// <summary>
+        /// Sets broker response for continuing authentication flow.
+        /// </summary>
+        /// <param name="url"></param>
+        public static void SetBrokerContinuationEventArgs(Uri url)
         {
-            // Insert code here to initialize your application
+            BrokerHelper.SetBrokerResponse(url);
         }
 
-        public override void WillTerminate(NSNotification notification)
-        {
-            // Insert code here to tear down your application
-        }
     }
 }
-

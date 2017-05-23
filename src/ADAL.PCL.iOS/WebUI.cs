@@ -1,4 +1,4 @@
-//------------------------------------------------------------------------------
+﻿//------------------------------------------------------------------------------
 //
 // Copyright (c) Microsoft Corporation.
 // All rights reserved.
@@ -65,10 +65,19 @@ namespace Microsoft.IdentityService.Clients.ActiveDirectory
             try
             {
 #if MAC
-                var windowController = new AuthenticationAgentNSWindowController(authorizationUri.AbsoluteUri, redirectUri.OriginalString, CallbackMethod);
-                windowController.Run (parameters.CallerWindow);
+                this.parameters.CallerWindow.InvokeOnMainThread(() =>
+                {
+                    var windowController = new AuthenticationAgentNSWindowController(authorizationUri.AbsoluteUri, redirectUri.OriginalString, CallbackMethod);
+                    windowController.Run(parameters.CallerWindow);
+                });
 #else
-                this.parameters.CallerViewController.PresentViewController(new AuthenticationAgentUINavigationController(authorizationUri.AbsoluteUri, redirectUri.OriginalString, CallbackMethod), false, null);
+                this.parameters.CallerViewController.InvokeOnMainThread(() =>
+                {
+                    var navigationController =
+                        new AuthenticationAgentUINavigationController(authorizationUri.AbsoluteUri,
+                            redirectUri.OriginalString, CallbackMethod);
+                    this.parameters.CallerViewController.PresentViewController(navigationController, false, null);
+                });
 #endif
             }
             catch (Exception ex)

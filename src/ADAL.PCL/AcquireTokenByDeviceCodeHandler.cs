@@ -30,20 +30,15 @@ using System.Threading.Tasks;
 
 namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
-    class AcquireTokenByDeviceCodeHandler : AcquireTokenHandlerBase
+    internal class AcquireTokenByDeviceCodeHandler : AcquireTokenHandlerBase
     {
         private DeviceCodeResult deviceCodeResult = null;
 
-        public AcquireTokenByDeviceCodeHandler(Authenticator authenticator, TokenCache tokenCache, DeviceCodeResult deviceCodeResult)
-            : base(authenticator, tokenCache, deviceCodeResult.Resource, new ClientKey(deviceCodeResult.ClientId), TokenSubjectType.User)
+        public AcquireTokenByDeviceCodeHandler(RequestData requestData, DeviceCodeResult deviceCodeResult)
+            : base(requestData)
         {
-            if (deviceCodeResult == null)
-            {
-                throw new ArgumentNullException("deviceCodeResult");
-            }
-            
             this.LoadFromCache = false; //no cache lookup for token
-            this.StoreToCache = (tokenCache != null);
+            this.StoreToCache = (requestData.TokenCache != null);
             this.SupportADFS = false;
             this.deviceCodeResult = deviceCodeResult;
         }

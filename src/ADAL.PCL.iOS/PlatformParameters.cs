@@ -41,7 +41,7 @@ namespace Microsoft.IdentityService.Clients.ActiveDirectory
     {
         private PlatformParameters()
         {
-            UseBroker = true;
+            UseBroker = false;
         }
 
         /// <summary>

@@ -42,8 +42,20 @@ namespace Test.ADAL.NET.Unit.Mocks
         
         public static HttpResponseMessage CreateSuccessTokenResponseMessage()
         {
+            return CreateSuccessTokenResponseMessage(false);
+        }
+
+        public static HttpResponseMessage CreateSuccessTokenResponseMessage(bool setExtendedExpiresIn)
+        {
             HttpResponseMessage responseMessage = new HttpResponseMessage(HttpStatusCode.OK);
-            HttpContent content = new StringContent("{\"token_type\":\"Bearer\",\"expires_in\":\"3599\",\"resource\":\"resource1\",\"access_token\":\"some-access-token\",\"refresh_token\":\"something-encrypted\",\"id_token\":\"" +
+            string extendedExpiresIn = "";
+
+            if (setExtendedExpiresIn)
+            {
+                extendedExpiresIn = "\"ext_expires_in\":\"7200\",";
+            }
+
+            HttpContent content = new StringContent("{\"token_type\":\"Bearer\",\"expires_in\":\"3600\","+ extendedExpiresIn + "\"resource\":\"resource1\",\"access_token\":\"some-access-token\",\"refresh_token\":\"something-encrypted\",\"id_token\":\"" +
                                   CreateIdToken(TestConstants.DefaultUniqueId, TestConstants.DefaultDisplayableId) +
                                   "\"}");
             responseMessage.Content = content;
@@ -64,11 +76,46 @@ namespace Test.ADAL.NET.Unit.Mocks
                     "{\"error\":\"invalid_grant\",\"error_description\":\"AADSTS70002: Error validating credentials.AADSTS70008: The provided access grant is expired or revoked.Trace ID: f7ec686c-9196-4220-a754-cd9197de44e9Correlation ID: 04bb0cae-580b-49ac-9a10-b6c3316b1eaaTimestamp: 2015-09-16 07:24:55Z\",\"error_codes\":[70002,70008],\"timestamp\":\"2015-09-16 07:24:55Z\",\"trace_id\":\"f7ec686c-9196-4220-a754-cd9197de44e9\",\"correlation_id\":\"04bb0cae-580b-49ac-9a10-b6c3316b1eaa\"}");
         }
 
+        public static HttpResponseMessage CreateHttpErrorResponse()
+        {
+            return
+                CreateFailureResponseMessage(
+                    "{\"ErrorSubCode\":\"70323\",\"error\":\"invalid_grant\",\"error_description\":\"AADSTS70002: Error validating credentials.AADSTS70008: The provided access grant is expired or revoked.Trace ID: f7ec686c-9196-4220-a754-cd9197de44e9Correlation ID: 04bb0cae-580b-49ac-9a10-b6c3316b1eaaTimestamp: 2015-09-16 07:24:55Z\",\"error_codes\":[70002,70008],\"timestamp\":\"2015-09-16 07:24:55Z\",\"trace_id\":\"f7ec686c-9196-4220-a754-cd9197de44e9\",\"correlation_id\":\"04bb0cae-580b-49ac-9a10-b6c3316b1eaa\"}");
+        }
+
         public static HttpResponseMessage CreateFailureResponseMessage(string message)
         {
             HttpResponseMessage responseMessage = new HttpResponseMessage(HttpStatusCode.BadRequest);
             HttpContent content = new StringContent(message);
             responseMessage.Content = content;
+            return responseMessage;
+        }
+
+        public static HttpResponseMessage CreateResiliencyMessage(HttpStatusCode statusCode)
+        {
+            HttpResponseMessage responseMessage = null;
+            HttpContent content = null;
+
+            switch ((int)statusCode)
+            {
+                case 500:
+                    responseMessage = new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                    content = new StringContent("Internal Server Error");
+                    break;
+                case 503:
+                    responseMessage = new HttpResponseMessage(HttpStatusCode.ServiceUnavailable);
+                    content = new StringContent("Service Unavailable");
+                    break;
+                case 504:
+                    responseMessage = new HttpResponseMessage(HttpStatusCode.GatewayTimeout);
+                    content = new StringContent("Gateway Timeout");
+                    break;
+            }
+
+            if (responseMessage != null)
+            {
+                responseMessage.Content = content;
+            }            
             return responseMessage;
         }
 
@@ -84,7 +131,7 @@ namespace Test.ADAL.NET.Unit.Mocks
 
         public static HttpResponseMessage CreateSuccessTokenResponseMessage(string uniqueId, string displayableId, string resource)
         {
-            string idToken = string.Format(CultureInfo.InvariantCulture, "someheader.{0}.somesignature", CreateIdToken(uniqueId, displayableId));
+            string idToken = string.Format(CultureInfo.InvariantCulture, "{0}", CreateIdToken(uniqueId, displayableId));
             HttpResponseMessage responseMessage = new HttpResponseMessage(HttpStatusCode.OK);
             HttpContent content =
                 new StringContent("{\"token_type\":\"Bearer\",\"expires_in\":\"3599\",\"resource\":\"" +
@@ -114,7 +161,7 @@ namespace Test.ADAL.NET.Unit.Mocks
                         "\"tid\": \"some-tenant-id\"," +
                         "\"ver\": \"2.0\"}";
 
-            return string.Format(CultureInfo.InvariantCulture, "{0}.{1}.", Base64UrlEncoder.Encode(header), Base64UrlEncoder.Encode(payload));
+            return string.Format(CultureInfo.InvariantCulture, "{0}.{1}.signature", Base64UrlEncoder.Encode(header), Base64UrlEncoder.Encode(payload));
         }
     }
 }
