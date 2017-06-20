@@ -121,6 +121,11 @@ namespace Microsoft.IdentityService.Clients.ActiveDirectory
             }
 
             NSApplication.SharedApplication.EndModalSession(session);
+            if (callerWindow != null)
+            {
+                callerWindow.MakeMainWindow();
+                callerWindow.MakeKeyWindow();
+            }
         }
 
         //largely ported from azure-activedirectory-library-for-objc
