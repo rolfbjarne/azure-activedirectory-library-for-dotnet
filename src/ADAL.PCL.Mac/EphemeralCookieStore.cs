@@ -26,6 +26,7 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.Net;
 using System.Collections.Generic;
 using System.Linq;
 using Foundation;
@@ -35,7 +36,7 @@ namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
     class EphemeralCookieStore
     {
-        readonly List<NSHttpCookie> storedCookies = new List<NSHttpCookie>();
+        readonly CookieContainer container = new CookieContainer();
 
         /// <summary>
         /// Captures cookies that were set by JavaScript.
@@ -101,70 +102,16 @@ namespace Microsoft.IdentityService.Clients.ActiveDirectory
 
         void AddCookieToStorage(NSHttpCookie cookie)
         {
-            //check whether this replaces an existing cookie
-            for (int i = 0; i < storedCookies.Count; i++)
-            {
-                var storedCookie = storedCookies[i];
-                if (storedCookie.Domain == cookie.Domain & storedCookie.Path == cookie.Path && storedCookie.Name == cookie.Name)
-                {
-                    NSDate cookieExpires = cookie.ExpiresDate;
-                    if (cookieExpires != null && ((DateTime)cookieExpires) < DateTime.UtcNow)
-                    {
-                        storedCookies.RemoveAt(i);
-                    }
-                    else
-                    {
-                        storedCookies[i] = cookie;
-                    }
-                    return;
-                }
-            }
-            //else just add it
-            storedCookies.Add(cookie);
+            container.Add(new Cookie(cookie.Name, cookie.Value, cookie.Path, cookie.Domain));
         }
 
         IEnumerable<NSHttpCookie> GetStoredCookiesForUrl(NSUrl url)
         {
-            var urlPath = url.Path;
-            var urlDomain = url.Host;
-            var urlDotDomain = "." + url.Host;
-            var urlIsSecure = string.Equals("https", url.Scheme, StringComparison.OrdinalIgnoreCase);
+            var collection = container.GetCookies(url);
 
-            foreach (var cookie in storedCookies)
-            {
-                NSDate cookieExpires = cookie.ExpiresDate;
-                if (cookieExpires != null && ((DateTime)cookieExpires) < DateTime.UtcNow)
-                {
-                    continue;
-                }
-
-                if (cookie.IsSecure && !urlIsSecure)
-                {
-                    continue;
-                }
-
-                bool domainMatch = (cookie.Domain[0] == '.')
-                    ? urlDotDomain.StartsWith(cookie.Domain, StringComparison.OrdinalIgnoreCase)
-                    : string.Equals(cookie.Domain, urlDomain, StringComparison.OrdinalIgnoreCase);
-
-                if (!domainMatch)
-                {
-                    continue;
-                }
-
-                var cookiePath = cookie.Path;
-                var pathMatch = cookiePath == "/"
-                    || (urlPath.StartsWith(cookiePath, StringComparison.Ordinal)
-                        && (cookiePath.Length == urlPath.Length || urlPath[cookiePath.Length] == '/'));
-
-                if (!pathMatch)
-                {
-                    continue;
-                }
-
-                yield return cookie;
+			foreach (Cookie cookie in collection) {
+                yield return new NSHttpCookie(cookie);
             }
-            yield break;
         }
     }
 }
