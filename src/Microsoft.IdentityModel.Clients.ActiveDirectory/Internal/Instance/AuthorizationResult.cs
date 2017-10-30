@@ -66,6 +66,7 @@ namespace Microsoft.IdentityService.Clients.ActiveDirectory
             }
         }
 
+        [DataMember]
         public AuthorizationStatus Status { get; private set; }
 
         [DataMember]
