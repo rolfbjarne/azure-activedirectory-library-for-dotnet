@@ -31,7 +31,7 @@ using Android.App;
 using Android.Content;
 using Android.Widget;
 using Android.OS;
-using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using Microsoft.IdentityService.Clients.ActiveDirectory;
 
 namespace AdalAndroidTestApp
 {

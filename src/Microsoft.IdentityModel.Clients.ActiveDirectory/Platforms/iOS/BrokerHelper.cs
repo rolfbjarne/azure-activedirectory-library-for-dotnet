@@ -35,7 +35,7 @@ using CoreFoundation;
 using Foundation;
 using UIKit;
 
-namespace Microsoft.IdentityModel.Clients.ActiveDirectory
+namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
     internal class BrokerHelper
     {

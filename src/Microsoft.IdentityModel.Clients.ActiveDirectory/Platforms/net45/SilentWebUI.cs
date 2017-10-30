@@ -29,7 +29,7 @@ using System;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace Microsoft.IdentityModel.Clients.ActiveDirectory.Internal
+namespace Microsoft.IdentityService.Clients.ActiveDirectory.Internal
 {
     internal class SilentWebUI : WebUI, IDisposable
     {

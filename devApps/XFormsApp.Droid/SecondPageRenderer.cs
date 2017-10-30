@@ -40,7 +40,7 @@ using XFormsApp.Droid;
 using XFormsApp;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
-using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using Microsoft.IdentityService.Clients.ActiveDirectory;
 
 [assembly: ExportRenderer(typeof(SecondPage), typeof(SecondPageRenderer))]
 namespace XFormsApp.Droid

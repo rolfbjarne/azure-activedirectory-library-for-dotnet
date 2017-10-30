@@ -28,7 +28,7 @@
 using System;
 using System.Threading.Tasks;
 
-using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using Microsoft.IdentityService.Clients.ActiveDirectory;
 
 namespace AdalDesktopTestApp
 {

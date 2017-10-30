@@ -25,7 +25,7 @@
 //
 //------------------------------------------------------------------------------
 
-namespace Microsoft.IdentityModel.Clients.ActiveDirectory.Internal
+namespace Microsoft.IdentityService.Clients.ActiveDirectory.Internal
 {
     internal class InteractiveWebUI : WebUI
     {

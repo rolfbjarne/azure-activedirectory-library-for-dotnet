@@ -27,7 +27,7 @@
 
 using System.Collections.Generic;
 
-namespace Microsoft.IdentityModel.Clients.ActiveDirectory
+namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
     /// <summary>
     /// Interface to allow for client secret to be passed in as a SecureString

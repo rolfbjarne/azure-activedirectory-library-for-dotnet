@@ -33,7 +33,7 @@ using Android.Content;
 using Android.OS;
 using Android.Webkit;
 
-namespace Microsoft.IdentityModel.Clients.ActiveDirectory
+namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
     [Activity(Label = "Sign in")]
     [CLSCompliant(false)]

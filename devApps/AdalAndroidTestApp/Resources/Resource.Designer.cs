@@ -26,9 +26,9 @@ namespace AdalAndroidTestApp
 		
 		public static void UpdateIdValues()
 		{
-			global::Microsoft.IdentityModel.Clients.ActiveDirectory.Resource.Id.agentWebView = global::AdalAndroidTestApp.Resource.Id.agentWebView;
-			global::Microsoft.IdentityModel.Clients.ActiveDirectory.Resource.Layout.WebAuthenticationBroker = global::AdalAndroidTestApp.Resource.Layout.WebAuthenticationBroker;
-			global::Microsoft.IdentityModel.Clients.ActiveDirectory.Resource.String.ApplicationName = global::AdalAndroidTestApp.Resource.String.ApplicationName;
+			global::Microsoft.IdentityService.Clients.ActiveDirectory.Resource.Id.agentWebView = global::AdalAndroidTestApp.Resource.Id.agentWebView;
+			global::Microsoft.IdentityService.Clients.ActiveDirectory.Resource.Layout.WebAuthenticationBroker = global::AdalAndroidTestApp.Resource.Layout.WebAuthenticationBroker;
+			global::Microsoft.IdentityService.Clients.ActiveDirectory.Resource.String.ApplicationName = global::AdalAndroidTestApp.Resource.String.ApplicationName;
 		}
 		
 		public partial class Attribute

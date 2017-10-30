@@ -29,7 +29,7 @@ using System;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Microsoft.IdentityModel.Clients.ActiveDirectory
+namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
     [Android.Runtime.Preserve(AllMembers = true)]
     internal class CryptographyHelper

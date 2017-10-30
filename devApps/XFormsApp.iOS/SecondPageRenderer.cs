@@ -37,7 +37,7 @@ using Xamarin.Forms;
 using XFormsApp;
 using XFormsApp.iOS;
 using System.Drawing;
-using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using Microsoft.IdentityService.Clients.ActiveDirectory;
 
 [assembly: ExportRenderer(typeof(SecondPage), typeof(SecondPageRenderer))]
 namespace XFormsApp.iOS

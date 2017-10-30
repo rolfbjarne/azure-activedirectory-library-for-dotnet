@@ -31,7 +31,7 @@ using System.Linq;
 
 using Foundation;
 using UIKit;
-using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using Microsoft.IdentityService.Clients.ActiveDirectory;
 using Xamarin.Forms;
 
 namespace XFormsApp.iOS

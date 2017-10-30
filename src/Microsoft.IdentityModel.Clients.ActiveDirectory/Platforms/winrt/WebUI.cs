@@ -31,7 +31,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Windows.Security.Authentication.Web;
 
-namespace Microsoft.IdentityModel.Clients.ActiveDirectory
+namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
     internal class WebUI : IWebUI
     {

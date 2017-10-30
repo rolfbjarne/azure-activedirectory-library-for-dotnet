@@ -29,7 +29,7 @@ using System;
 using System.Globalization;
 using System.Security.Cryptography.X509Certificates;
 
-namespace Microsoft.IdentityModel.Clients.ActiveDirectory
+namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
     /// <summary>
     /// Containing certificate used to create client assertion.

@@ -34,7 +34,7 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace Microsoft.IdentityModel.Clients.ActiveDirectory.Internal
+namespace Microsoft.IdentityService.Clients.ActiveDirectory.Internal
 {
     /// <summary>
     /// Base class for web form

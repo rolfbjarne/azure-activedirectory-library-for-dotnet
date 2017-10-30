@@ -27,7 +27,7 @@
 
 using System;
 using Foundation;
-using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using Microsoft.IdentityService.Clients.ActiveDirectory;
 
 using UIKit;
 

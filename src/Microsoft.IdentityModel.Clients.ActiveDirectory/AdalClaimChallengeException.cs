@@ -27,7 +27,7 @@
 
 using System;
 
-namespace Microsoft.IdentityModel.Clients.ActiveDirectory
+namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
     /// <summary>
     /// The exception type thrown when a claims challenge error occurs during token acquisition.

@@ -1,4 +1,4 @@
-﻿using Microsoft.IdentityModel.Clients.ActiveDirectory;
+﻿using Microsoft.IdentityService.Clients.ActiveDirectory;
 using System;
 using System.Collections.Generic;
 using System.IO;

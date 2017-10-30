@@ -25,7 +25,7 @@
 //
 //------------------------------------------------------------------------------
 
-using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using Microsoft.IdentityService.Clients.ActiveDirectory;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -37,7 +37,7 @@ using System.Threading.Tasks;
 using Test.ADAL.Common;
 using Test.ADAL.Common.Unit;
 using Test.ADAL.NET.Unit.Mocks;
-using AuthenticationContext = Microsoft.IdentityModel.Clients.ActiveDirectory.AuthenticationContext;
+using AuthenticationContext = Microsoft.IdentityService.Clients.ActiveDirectory.AuthenticationContext;
 
 namespace Test.ADAL.NET.Unit
 {

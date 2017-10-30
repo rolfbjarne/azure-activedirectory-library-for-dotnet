@@ -28,7 +28,7 @@
 using System;
 using System.Threading;
 
-namespace Microsoft.IdentityModel.Clients.ActiveDirectory
+namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
     /// <summary>
     /// ADAL Log Levels

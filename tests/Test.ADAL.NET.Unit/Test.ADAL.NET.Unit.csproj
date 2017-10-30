@@ -122,9 +122,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Microsoft.IdentityModel.Clients.ActiveDirectory\Microsoft.IdentityModel.Clients.ActiveDirectory.csproj">
+    <ProjectReference Include="..\..\src\Microsoft.IdentityModel.Clients.ActiveDirectory\Microsoft.IdentityService.Clients.ActiveDirectory.csproj">
       <Project>{aece489d-9ed4-442d-8d8f-0f383aebb781}</Project>
-      <Name>Microsoft.IdentityModel.Clients.ActiveDirectory</Name>
+      <Name>Microsoft.IdentityService.Clients.ActiveDirectory</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

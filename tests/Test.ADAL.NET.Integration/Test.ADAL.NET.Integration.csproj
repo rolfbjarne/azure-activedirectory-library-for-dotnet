@@ -86,9 +86,9 @@
     <None Include="35MSSharedLib1024.snk" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Microsoft.IdentityModel.Clients.ActiveDirectory\Microsoft.IdentityModel.Clients.ActiveDirectory.csproj">
+    <ProjectReference Include="..\..\src\Microsoft.IdentityModel.Clients.ActiveDirectory\Microsoft.IdentityService.Clients.ActiveDirectory.csproj">
       <Project>{aece489d-9ed4-442d-8d8f-0f383aebb781}</Project>
-      <Name>Microsoft.IdentityModel.Clients.ActiveDirectory</Name>
+      <Name>Microsoft.IdentityService.Clients.ActiveDirectory</Name>
     </ProjectReference>
     <ProjectReference Include="..\Test.ADAL.NET.Unit\Test.ADAL.NET.Unit.csproj">
       <Project>{91E9E564-8A44-457B-A97C-E76C9F6275D6}</Project>

@@ -34,7 +34,7 @@ using Android.App;
 using Android.Content;
 using Java.IO;
 
-namespace Microsoft.IdentityModel.Clients.ActiveDirectory
+namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
     [Android.Runtime.Preserve(AllMembers = true)]
     internal class BrokerHelper
