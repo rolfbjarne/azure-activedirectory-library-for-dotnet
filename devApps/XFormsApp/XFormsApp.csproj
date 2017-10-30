@@ -16,7 +16,7 @@
     <!-- Workaround until Xamarin supports PPDB -->
     <DebugType>full</DebugType>
     <SignAssembly>False</SignAssembly>
-    <AssemblyOriginatorKeyFile>35MSSharedLib1024.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>VSPublicKey.snk</AssemblyOriginatorKeyFile>
     <DelaySign>True</DelaySign>
   </PropertyGroup>
   <ItemGroup>

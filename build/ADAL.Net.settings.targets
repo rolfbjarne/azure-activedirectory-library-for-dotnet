@@ -4,7 +4,7 @@
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
     <DelaySign>true</DelaySign>
-    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)\35MSSharedLib1024.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)\VSPublicKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
 </Project>
