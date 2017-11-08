@@ -31,7 +31,7 @@ using System.Runtime.Serialization;
 
 namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
-    internal enum AuthorizationStatus
+    public enum AuthorizationStatus
     {
         Success,
         ErrorHttp,
@@ -41,8 +41,11 @@ namespace Microsoft.IdentityService.Clients.ActiveDirectory
     }
 
     [DataContract]
-    internal class AuthorizationResult
+    public class AuthorizationResult
     {
+        // The parameterless default constructor is used by JSON deserializer 
+        public AuthorizationResult() { }
+
         internal AuthorizationResult(AuthorizationStatus status)
         {
             this.Status = status;

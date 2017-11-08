@@ -30,7 +30,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
-    interface IWebUI
+    public interface IWebUI
     {
         Task<AuthorizationResult> AcquireAuthorizationAsync(Uri authorizationUri, Uri redirectUri, CallState callState);
     }
