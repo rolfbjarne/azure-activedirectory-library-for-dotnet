@@ -27,7 +27,7 @@
 
 namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
-    internal static class WebUIFactoryProvider
+    public static class WebUIFactoryProvider
     {
         public static IWebUIFactory WebUIFactory { get; set; } = new WebUIFactory();
     }
