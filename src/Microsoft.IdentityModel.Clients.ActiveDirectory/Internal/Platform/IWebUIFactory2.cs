@@ -1,4 +1,4 @@
-﻿//------------------------------------------------------------------------------
+﻿//----------------------------------------------------------------------
 //
 // Copyright (c) Microsoft Corporation.
 // All rights reserved.
@@ -27,8 +27,9 @@
 
 namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
-    public static class WebUIFactoryProvider
+    public interface IWebUIFactory2 : IWebUIFactory
+
     {
-        public static IWebUIFactory WebUIFactory { get; set; } = new WebUIFactory();
+        IWebUI CreateAuthenticationDialog2(IPlatformParameters parameters, object additionalContext);
     }
 }

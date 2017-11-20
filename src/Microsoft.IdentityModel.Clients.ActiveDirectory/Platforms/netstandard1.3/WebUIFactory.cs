@@ -29,7 +29,7 @@ using System;
 
 namespace Microsoft.IdentityService.Clients.ActiveDirectory
 {
-    internal class WebUIFactory : IWebUIFactory
+    public class WebUIFactory : IWebUIFactory
     {
         public IWebUI CreateAuthenticationDialog(IPlatformParameters parameters)
         {

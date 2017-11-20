@@ -45,6 +45,8 @@ namespace Microsoft.IdentityService.Clients.ActiveDirectory
     {
         internal Authenticator Authenticator;
 
+        internal object additionalAuthenticationDialogContext;
+
         /// <summary>
         /// Constructor to create the context with the address of the authority.
         /// Using this constructor will turn ON validation of the authority URL by default if validation is supported for the authority address.
@@ -89,6 +91,21 @@ namespace Microsoft.IdentityService.Clients.ActiveDirectory
             : this(authority, validateAuthority ? AuthorityValidationType.True : AuthorityValidationType.False,
                 tokenCache)
         {
+        }
+
+        /// <summary>
+        /// Constructor to create the context with the address of the authority and flag to turn address validation off.
+        /// Using this constructor, address validation can be turned off. Make sure you are aware of the security implication of not validating the address.
+        /// </summary>
+        /// <param name="authority">Address of the authority to issue token.</param>
+        /// <param name="validateAuthority">Flag to turn address validation ON or OFF.</param>
+        /// <param name="tokenCache">Token cache used to lookup cached tokens on calls to AcquireToken</param>
+        /// <param name="additionalAuthenticationDialogContext">Additional context object that will be used during authentication dialog creation</param> 
+        public AuthenticationContext(string authority, bool validateAuthority, TokenCache tokenCache, object additionalAuthenticationDialogContext)
+            : this(authority, validateAuthority ? AuthorityValidationType.True : AuthorityValidationType.False,
+                tokenCache)
+        {
+            this.additionalAuthenticationDialogContext = additionalAuthenticationDialogContext;
         }
 
         private AuthenticationContext(string authority, AuthorityValidationType validateAuthority,
@@ -402,7 +419,17 @@ namespace Microsoft.IdentityService.Clients.ActiveDirectory
 
         internal IWebUI CreateWebAuthenticationDialog(IPlatformParameters parameters)
         {
-            return WebUIFactoryProvider.WebUIFactory.CreateAuthenticationDialog(parameters);
+            IWebUIFactory2 factory2 = WebUIFactoryProvider.WebUIFactory as IWebUIFactory2;
+
+            if (factory2 != null)
+            {
+                return factory2.CreateAuthenticationDialog2(parameters, this.additionalAuthenticationDialogContext);
+            }
+
+            else 
+            {
+                return WebUIFactoryProvider.WebUIFactory.CreateAuthenticationDialog(parameters);
+            }
         }
 
         internal async Task<AuthenticationResult> AcquireTokenCommonAsync(string resource, string clientId,
