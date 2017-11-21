@@ -12,17 +12,13 @@
     <Product>Microsoft.IdentityService.Clients.ActiveDirectory ($(TargetFramework))</Product>
     <GenerateDocumentationFile Condition=" '$(Configuration)' == 'Release' ">true</GenerateDocumentationFile>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
-    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
-    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
-    <GenerateAssemblyInformationalVersionAttribute>false</GenerateAssemblyInformationalVersionAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\..\build\VSPublicKey.snk</AssemblyOriginatorKeyFile>
-	<DelaySign>true</DelaySign>
+    <DelaySign>true</DelaySign>
     <!-- Workaround until Xamarin supports PPDB -->
-    <UseFullSemVerForNuGet>false</UseFullSemVerForNuGet>
     <DebugType>full</DebugType>
   
 
@@ -56,8 +52,8 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MSBuild.Sdk.Extras" Version="1.1.0" PrivateAssets="All" />
-    <PackageReference Include="Microbuild.VisualStudio" Version="2.0.42" suppressParent="none" />
-    <PackageReference Include="Microbuild.Core" Version="0.2.0" suppressParent="none" />
+    <PackageReference Include="Microbuild.VisualStudio" Version="2.0.42" suppressParent="none" PrivateAssets="All" />
+    <PackageReference Include="Nerdbank.Gitversioning" Version="2.0.41" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.1' or '$(TargetFramework)' == 'netstandard1.3'">
     <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />

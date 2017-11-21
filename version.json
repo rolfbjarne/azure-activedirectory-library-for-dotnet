@@ -1,0 +1,14 @@
+{
+  "version": "3.17.1",
+  "assemblyVersion":
+  {
+    "precision": "revision"
+  },
+  "cloudBuild":
+  {
+    "buildNumber":
+    {
+      "enabled": true
+    }
+  }
+}
