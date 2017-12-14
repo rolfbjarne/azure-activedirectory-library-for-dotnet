@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFrameworks>net45;netstandard1.1;netstandard1.3;MonoAndroid7;Xamarin.iOS10</TargetFrameworks>        
+    <TargetFrameworks>net45;netstandard1.1;netstandard1.3</TargetFrameworks>
     <Product>Microsoft.IdentityService.Clients.ActiveDirectory ($(TargetFramework))</Product>
     <GenerateDocumentationFile Condition=" '$(Configuration)' == 'Release' ">true</GenerateDocumentationFile>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
