@@ -64,3 +64,10 @@ steps:
     usePat: "false"
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
 
+- task: NuGetPublisher@0
+  inputs:
+    searchPattern: '$(Build.SourcesDirectory)/src/Microsoft.IdentityModel.Clients.ActiveDirectory/bin/$(BuildConfiguration)/*.nupkg'
+    nuGetFeedType: "internal"
+    feedName: "https://devdiv.pkgs.visualstudio.com/DefaultCollection/_packaging/VSIDE-$(SignType)Signed-$(BuildConfiguration)/nuget/v3/index.json"
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+
