@@ -1,0 +1,65 @@
+queue: VSEng-MicroBuildVS2017
+
+steps:
+- task: MicroBuildSigningPlugin@1
+  inputs:
+    signType: "$(SignType)"
+
+- task: MicroBuildLocalizationPlugin@1
+
+- task: NuGetCommand@2
+  inputs:
+    restoreSolution: "ADAL.NET.NoWinRT.sln"
+    feedsToUse: "config"
+    nugetConfigPath: .nuget\nuget.config
+
+- task: VSBuild@1
+  inputs:
+    solution: "ADAL.NET.NoWinRT.sln"
+    vsVersion: "15.0"
+    configuration: "$(BuildConfiguration)"
+
+- task: VSTest@1
+  inputs:
+    testAssembly: "$(Build.SourcesDirectory)/tests/Test.ADAL.NET.Unit/bin/$(BuildConfiguration)/*test*.dll"
+    codeCoverageEnabled: "false"
+    vsTestVersion: "latest"
+    platform: "$(BuildPlatform)"
+    configuration: "$(BuildConfiguration)"
+
+- task: MicroBuildCleanup@1
+
+- task: CopyPublishBuildArtifacts@1
+  inputs:
+    Contents: "**/bin/$(BuildConfiguration)/**"
+    ArtifactName: "bin"
+    ArtifactType: Container
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+
+- task: CopyFiles@1
+  inputs:
+    Contents: "**/$(BuildConfiguration)/**Microsoft.IdentityService.Clients.ActiveDirectory*pdb"
+    TargetFolder: "$(Build.ArtifactStagingDirectory)/symbols"
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+
+- task: PublishSymbols@1
+  inputs:
+    SearchPattern: "**/*.pdb"
+    SymbolsFolder: "$(Build.ArtifactStagingDirectory)/symbols"
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: "$(Build.ArtifactStagingDirectory)/symbols"
+    ArtifactName: "symbols"
+    ArtifactType: "Container"
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+
+- task: ms-vscs-artifact.build-tasks.artifactSymbolTask-1.artifactSymbolTask@0
+  inputs:
+    symbolServiceURI: "https://microsoft.artifacts.visualstudio.com/DefaultCollection"
+    requestName: "CollectionId/$(System.CollectionId)/ProjectId/$(System.TeamProjectId)/BuildId/$(Build.BuildId)"
+    sourcePath: "$(Build.ArtifactStagingDirectory)/symbols"
+    usePat: "false"
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+
