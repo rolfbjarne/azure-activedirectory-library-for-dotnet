@@ -16,6 +16,7 @@ steps:
 - task: VSBuild@1
   inputs:
     solution: "ADAL.NET.NoWinRT.sln"
+    msbuildArgs: "/t:build,pack"
     vsVersion: "15.0"
     configuration: "$(BuildConfiguration)"
 
