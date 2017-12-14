@@ -1,0 +1,77 @@
+queue:
+  name: MicroBuildV2Pool
+  demands:
+    - msbuild
+    - visualstudio
+    - vstest
+    - Cmd
+
+steps:
+- task: MicroBuildSigningPlugin@1
+  inputs:
+    signType: "$(SignType)"
+
+- task: MicroBuildLocalizationPlugin@1
+
+- task: CmdLine@1
+  inputs:
+    filename: "cmd.exe"
+    arguments: /c init.cmd "2>&1"
+
+- task: VSBuild@1
+  inputs:
+    solution: "ADAL.NET.DesktopAndCoreCLR.sln"
+    vsVersion: "14.0"
+    configuration: "$(BuildConfiguration)"
+
+- task: VSTest@1
+  inputs:
+    testAssembly: "$(Build.SourcesDirectory)/tests/Test.ADAL.NET.Unit/bin/$(BuildConfiguration)/*test*.dll"
+    codeCoverageEnabled: "false"
+    platform: "$(BuildPlatform)"
+    configuration: "$(BuildConfiguration)"
+
+- task: MicroBuildCleanup@1
+
+- task: CopyPublishBuildArtifacts@1
+  inputs:
+    Contents: "**/bin/$(BuildConfiguration)/**"
+    ArtifactName: "bin"
+    ArtifactType: "FilePath"
+    TargetPath: \\cpvsbuild\drops\$(TeamName)\$(Build.DefinitionName)\$(Build.SourceBranchName)\$(Build.BuildNumber)
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+
+- task: CopyFiles@1
+  inputs:
+    Contents: "**/$(BuildConfiguration)/**Microsoft.IdentityService.Clients.ActiveDirectory*pdb"
+    TargetFolder: "$(Build.ArtifactStagingDirectory)/symbols"
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+
+- task: PublishSymbols@1
+  inputs:
+    SearchPattern: "**/*.pdb"
+    SymbolsFolder: "$(Build.ArtifactStagingDirectory)/symbols"
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: "$(Build.ArtifactStagingDirectory)/symbols"
+    ArtifactName: "symbols"
+    ArtifactType: "Container"
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+
+- task: ms-vscs-artifact.build-tasks.artifactSymbolTask-1.artifactSymbolTask@0
+  inputs:
+    symbolServiceURI: "https://microsoft.artifacts.visualstudio.com/DefaultCollection"
+    requestName: "CollectionId/$(System.CollectionId)/ProjectId/$(System.TeamProjectId)/BuildId/$(Build.BuildId)"
+    sourcePath: "$(Build.ArtifactStagingDirectory)/symbols"
+    usePat: "false"
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+
+- task: NuGetPublisher@0
+  inputs:
+    searchPattern: "$(Build.SourcesDirectory)/src/ADAL.DesktopAndCoreCLR.NuGet/bin/$(BuildConfiguration)/*.nupkg;-:**/*.symbols.nupkg"
+    nuGetFeedType: "internal"
+    feedName: "https://devdiv.pkgs.visualstudio.com/DefaultCollection/_packaging/VSIDE-$(SignType)Signed-$(BuildConfiguration)/nuget/v3/index.json"
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+
