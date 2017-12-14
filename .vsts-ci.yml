@@ -37,8 +37,7 @@ steps:
   inputs:
     Contents: "**/bin/$(BuildConfiguration)/**"
     ArtifactName: "bin"
-    ArtifactType: "FilePath"
-    TargetPath: \\cpvsbuild\drops\$(TeamName)\$(Build.DefinitionName)\$(Build.SourceBranchName)\$(Build.BuildNumber)
+    ArtifactType: Container
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
 
 - task: CopyFiles@1
