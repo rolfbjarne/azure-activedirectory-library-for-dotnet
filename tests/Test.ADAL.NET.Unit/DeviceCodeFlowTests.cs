@@ -28,7 +28,7 @@
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Microsoft.IdentityService.Clients.ActiveDirectory;
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Test.ADAL.NET.Unit.Mocks;
 
@@ -37,6 +37,12 @@ namespace Test.ADAL.NET.Unit
     [TestClass]
     public class DeviceCodeFlowTests
     {
+        [TestInitialize]
+        public void Initialize()
+        {
+            HttpMessageHandlerFactory.ClearMockHandlers();
+        }
+
         [TestMethod]
         public async Task PositiveTest()
         {

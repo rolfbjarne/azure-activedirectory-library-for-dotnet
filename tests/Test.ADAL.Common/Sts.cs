@@ -27,7 +27,7 @@
 
 using System;
 using System.Globalization;
-using Microsoft.IdentityService.Clients.ActiveDirectory;
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
 
 namespace Test.ADAL.Common
 {
@@ -227,7 +227,7 @@ namespace Test.ADAL.Common
             this.ValidClientId = "oic.resource.owner.flow";
             this.ValidDefaultRedirectUri = new Uri("oic://resource-owner/flow");
             this.ValidUserName = @"somedomain\username";
-            this.ValidPassword = "Password123";
+            this.ValidPassword = "<REPLACE>";
             this.ValidResource = "https://management.core.contoso.com/";
         }
     }
