@@ -32,5 +32,17 @@ namespace Microsoft.IdentityService.Clients.ActiveDirectory
     /// </summary>
     public class PlatformParameters : IPlatformParameters
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="promptBehavior"></param>
+        public PlatformParameters(PromptBehavior promptBehavior)
+        {
+        }
+
+        /// <summary>
+        /// Gets prompt behavior. If <see cref="PromptBehavior.Always"/>, asks service to show user the authentication page which gives them chance to authenticate as a different user.
+        /// </summary>
+        public PromptBehavior PromptBehavior { get; internal set; }
     }
 }
