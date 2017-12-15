@@ -1,0 +1,4 @@
+<Project>
+  <!-- Define empty Pack target for those projects that don't define it themselves. -->
+  <Target Name='Pack' />
+</Project>

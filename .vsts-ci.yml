@@ -16,6 +16,7 @@ steps:
 - task: VSBuild@1
   inputs:
     solution: "ADAL.NET.NoWinRT.sln"
+    msbuildArgs: "/t:build,pack"
     vsVersion: "15.0"
     configuration: "$(BuildConfiguration)"
 
@@ -61,5 +62,13 @@ steps:
     requestName: "CollectionId/$(System.CollectionId)/ProjectId/$(System.TeamProjectId)/BuildId/$(Build.BuildId)"
     sourcePath: "$(Build.ArtifactStagingDirectory)/symbols"
     usePat: "false"
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+
+- task: NuGetPublisher@0
+  inputs:
+    searchPattern: '$(Build.SourcesDirectory)/src/Microsoft.IdentityModel.Clients.ActiveDirectory/bin/$(BuildConfiguration)/*.nupkg'
+    nuGetFeedType: "internal"
+    feedName: "https://devdiv.pkgs.visualstudio.com/DefaultCollection/_packaging/VSIDE-$(SignType)Signed-$(BuildConfiguration)/nuget/v3/index.json"
+    nuGetVersion: 4.0.0.2283
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
 
