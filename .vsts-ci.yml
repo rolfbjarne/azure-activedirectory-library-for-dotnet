@@ -69,5 +69,6 @@ steps:
     searchPattern: '$(Build.SourcesDirectory)/src/Microsoft.IdentityModel.Clients.ActiveDirectory/bin/$(BuildConfiguration)/*.nupkg'
     nuGetFeedType: "internal"
     feedName: "https://devdiv.pkgs.visualstudio.com/DefaultCollection/_packaging/VSIDE-$(SignType)Signed-$(BuildConfiguration)/nuget/v3/index.json"
+    nuGetVersion: 4.0.0.2283
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
 
