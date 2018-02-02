@@ -36,9 +36,25 @@ namespace Microsoft.IdentityService.Clients.ActiveDirectory
         /// 
         /// </summary>
         /// <param name="promptBehavior"></param>
-        public PlatformParameters(PromptBehavior promptBehavior)
+        public PlatformParameters(PromptBehavior promptBehavior) : this(promptBehavior, null)
         {
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="promptBehavior"></param>
+        /// <param name="ownerWindow"></param>
+        public PlatformParameters(PromptBehavior promptBehavior, object ownerWindow)
+        {
+            this.PromptBehavior = promptBehavior;
+            this.OwnerWindow = ownerWindow;
+        }
+
+        /// <summary>
+        /// Gets the owner of the browser dialog which pops up for receiving user credentials. It can be null.
+        /// </summary>
+        public object OwnerWindow { get; private set; }
 
         /// <summary>
         /// Gets prompt behavior. If <see cref="PromptBehavior.Always"/>, asks service to show user the authentication page which gives them chance to authenticate as a different user.
