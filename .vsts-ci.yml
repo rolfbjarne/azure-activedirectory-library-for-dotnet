@@ -39,7 +39,7 @@ steps:
 
 - task: CopyFiles@1
   inputs:
-    Contents: "**/$(BuildConfiguration)/**Microsoft.IdentityService.Clients.ActiveDirectory*pdb"
+    Contents: "**/$(BuildConfiguration)/**/Microsoft.IdentityService.Clients.ActiveDirectory*pdb"
     TargetFolder: "$(Build.ArtifactStagingDirectory)/symbols"
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
 
