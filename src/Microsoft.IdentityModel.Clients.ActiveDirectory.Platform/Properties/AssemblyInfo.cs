@@ -33,7 +33,7 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Microsoft.IdentityModel.Clients.ActiveDirectory.Platform")]
+[assembly: AssemblyTitle("Microsoft.IdentityService.Clients.ActiveDirectory.Platform")]
 
 // Allow this assembly to be serviced when run on desktop CLR
 [assembly: AssemblyMetadata("Serviceable", "True")]
