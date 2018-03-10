@@ -26,6 +26,7 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Microsoft.IdentityService.Clients.ActiveDirectory
@@ -33,14 +34,16 @@ namespace Microsoft.IdentityService.Clients.ActiveDirectory
     internal class AcquireTokenByDeviceCodeHandler : AcquireTokenHandlerBase
     {
         private readonly DeviceCodeResult deviceCodeResult;
+        private readonly CancellationToken cancellationToken;
 
-        public AcquireTokenByDeviceCodeHandler(RequestData requestData, DeviceCodeResult deviceCodeResult)
+        public AcquireTokenByDeviceCodeHandler(RequestData requestData, DeviceCodeResult deviceCodeResult, CancellationToken cancellationToken)
             : base(requestData)
         {
             this.LoadFromCache = false; //no cache lookup for token
             this.StoreToCache = (requestData.TokenCache != null);
             this.SupportADFS = false;
             this.deviceCodeResult = deviceCodeResult;
+            this.cancellationToken = cancellationToken;
         }
 
         protected override async Task<AuthenticationResultEx> SendTokenRequestAsync()
@@ -62,8 +65,9 @@ namespace Microsoft.IdentityService.Clients.ActiveDirectory
                     }
                 }
 
-                await Task.Delay(TimeSpan.FromSeconds(deviceCodeResult.Interval)).ConfigureAwait(false);
+                await Task.Delay(TimeSpan.FromSeconds(deviceCodeResult.Interval), cancellationToken).ConfigureAwait(false);
                 timeRemaining = deviceCodeResult.ExpiresOn - DateTimeOffset.UtcNow;
+                cancellationToken.ThrowIfCancellationRequested();
             }
 
             return resultEx;

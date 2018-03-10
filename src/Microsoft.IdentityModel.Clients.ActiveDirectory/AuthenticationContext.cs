@@ -27,6 +27,7 @@
 
 using System;
 using System.Globalization;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Microsoft.IdentityService.Clients.ActiveDirectory
@@ -199,6 +200,21 @@ namespace Microsoft.IdentityService.Clients.ActiveDirectory
 #endif
         public async Task<AuthenticationResult> AcquireTokenByDeviceCodeAsync(DeviceCodeResult deviceCodeResult)
         {
+            return await AcquireTokenByDeviceCodeAsync(deviceCodeResult).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Acquires security token from the authority using an device code previously received.
+        /// This method does not lookup token cache, but stores the result in it, so it can be looked up using other methods such as <see cref="AuthenticationContext.AcquireTokenSilentAsync(string, string, UserIdentifier)"/>.
+        /// </summary>
+        /// <param name="deviceCodeResult">The device code result received from calling AcquireDeviceCodeAsync.</param>
+        /// <param name="cancellationToken">Cancel waiting for the device code to be authenticated</param>
+        /// <returns>It contains Access Token, its expiration time, user information.</returns>
+#if iOS
+        [Obsolete("This device profile API should only be used on text-only devices, and not on this target platform which is offering an interactive authentication experience. For details please see https://aka.ms/AdalNetConfFlows")]
+#endif
+        public async Task<AuthenticationResult> AcquireTokenByDeviceCodeAsync(DeviceCodeResult deviceCodeResult, CancellationToken cancellationToken)
+        {
             if (deviceCodeResult == null)
             {
                 throw new ArgumentNullException("deviceCodeResult");
@@ -213,7 +229,10 @@ namespace Microsoft.IdentityService.Clients.ActiveDirectory
                 ClientKey = new ClientKey(deviceCodeResult.ClientId)
             };
 
-            var handler = new AcquireTokenByDeviceCodeHandler(requestData, deviceCodeResult);
+            var handler = new AcquireTokenByDeviceCodeHandler(requestData, deviceCodeResult, cancellationToken);
+
+            cancellationToken.ThrowIfCancellationRequested();
+
             return await handler.RunAsync().ConfigureAwait(false);
         }
 
