@@ -38,6 +38,18 @@ namespace Microsoft.IdentityService.Clients.ActiveDirectory
         {
         }
 
+        public DeviceCodeResult(string userCode, string deviceCode, string verificationUrl, DateTimeOffset expiresOn, long interval, string message, string clientId, string resource)
+        {
+            this.UserCode = userCode;
+            this.DeviceCode = deviceCode;
+            this.VerificationUrl = verificationUrl;
+            this.ExpiresOn = expiresOn;
+            this.Interval = interval;
+            this.Message = message;
+            this.ClientId = clientId;
+            this.Resource = resource;
+        }
+        
         /// <summary>
         /// User code returned by the service
         /// </summary>
