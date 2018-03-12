@@ -28,6 +28,7 @@
 using System;
 using System.Globalization;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Microsoft.IdentityService.Clients.ActiveDirectory
@@ -202,6 +203,18 @@ namespace Microsoft.IdentityService.Clients.ActiveDirectory
         /// <returns>It contains Access Token, Refresh Token and the Access Token's expiration time.</returns>
         public async Task<AuthenticationResult> AcquireTokenByDeviceCodeAsync(DeviceCodeResult deviceCodeResult)
         {
+            return await this.AcquireTokenByDeviceCodeAsync(deviceCodeResult, CancellationToken.None).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Acquires security token from the authority using an device code previously received.
+        /// This method does not lookup token cache, but stores the result in it, so it can be looked up using other methods such as <see cref="AuthenticationContext.AcquireTokenSilentAsync(string, string, UserIdentifier)"/>.
+        /// </summary>
+        /// <param name="deviceCodeResult">The device code result received from calling AcquireDeviceCodeAsync.</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns>It contains Access Token, Refresh Token and the Access Token's expiration time.</returns>
+        public async Task<AuthenticationResult> AcquireTokenByDeviceCodeAsync(DeviceCodeResult deviceCodeResult, CancellationToken cancellationToken)
+        {
             if (deviceCodeResult == null)
             {
                 throw new ArgumentNullException("deviceCodeResult");
@@ -216,7 +229,7 @@ namespace Microsoft.IdentityService.Clients.ActiveDirectory
                 ClientKey = new ClientKey(deviceCodeResult.ClientId)
             };
 
-            var handler = new AcquireTokenByDeviceCodeHandler(requestData, deviceCodeResult);
+            var handler = new AcquireTokenByDeviceCodeHandler(requestData, deviceCodeResult, cancellationToken);
             return await handler.RunAsync().ConfigureAwait(false);
         }
 

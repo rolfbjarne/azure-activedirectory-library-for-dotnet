@@ -26,6 +26,7 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Microsoft.IdentityService.Clients.ActiveDirectory
@@ -33,21 +34,25 @@ namespace Microsoft.IdentityService.Clients.ActiveDirectory
     internal class AcquireTokenByDeviceCodeHandler : AcquireTokenHandlerBase
     {
         private DeviceCodeResult deviceCodeResult = null;
+        private CancellationToken cancellationToken;
 
-        public AcquireTokenByDeviceCodeHandler(RequestData requestData, DeviceCodeResult deviceCodeResult)
+        public AcquireTokenByDeviceCodeHandler(RequestData requestData, DeviceCodeResult deviceCodeResult, CancellationToken cancellationToken)
             : base(requestData)
         {
             this.LoadFromCache = false; //no cache lookup for token
             this.StoreToCache = (requestData.TokenCache != null);
             this.SupportADFS = false;
             this.deviceCodeResult = deviceCodeResult;
+            this.cancellationToken = cancellationToken;
         }
 
         protected override async Task<AuthenticationResultEx> SendTokenRequestAsync()
         {
             TimeSpan timeRemaining = deviceCodeResult.ExpiresOn - DateTimeOffset.UtcNow;
             AuthenticationResultEx resultEx = null;
-            while (timeRemaining.TotalSeconds > 0)
+            //the interval is added so that the while loop does not end before aquiring the last response from the STS stating that the code has expired.
+            //Without it, resultEx will end up being null.
+            while (timeRemaining.TotalSeconds + deviceCodeResult.Interval > 0)
             {
                 try
                 {
@@ -62,8 +67,9 @@ namespace Microsoft.IdentityService.Clients.ActiveDirectory
                     }
                 }
 
-                await Task.Delay(TimeSpan.FromSeconds(deviceCodeResult.Interval)).ConfigureAwait(false);
+                await Task.Delay(TimeSpan.FromSeconds(deviceCodeResult.Interval), cancellationToken).ConfigureAwait(false);
                 timeRemaining = deviceCodeResult.ExpiresOn - DateTimeOffset.UtcNow;
+                cancellationToken.ThrowIfCancellationRequested();
             }
 
             return resultEx;
