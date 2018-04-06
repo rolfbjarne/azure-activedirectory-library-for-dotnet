@@ -89,7 +89,7 @@ namespace Microsoft.IdentityService.Clients.ActiveDirectory
             {
                 this.handler = handler;
 #if MAC
-                client = (INSUrlProtocolClient)handler.WeakClient;
+                client = ObjCRuntime.Runtime.GetINativeObject<INSUrlProtocolClient>(handler.WeakClient.Handle, false);
 #else
                 client = handler.Client;
 #endif
